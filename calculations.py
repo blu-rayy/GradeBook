@@ -1,5 +1,3 @@
-# calculations.py
-
 def get_student_scores(df):
     print("\n📥 Enter your scores per subcategory:")
     scores = []
@@ -72,3 +70,13 @@ def get_student_scores(df):
 
 def calculate_final_grade(df):
     return df['Weighted Score'].sum()
+
+def get_letter_grade(grade):
+    if 70 <= grade <= 74: return 1.00
+    elif 75 <= grade <= 79: return 1.50
+    elif 80 <= grade <= 84: return 2.00
+    elif 85 <= grade <= 88: return 2.50
+    elif 89 <= grade <= 92: return 3.00
+    elif 93 <= grade <= 96: return 3.50
+    elif 97 <= grade <= 100: return 4.00
+
