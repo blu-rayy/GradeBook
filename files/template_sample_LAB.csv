@@ -1,0 +1,10 @@
+﻿Category,Subcategory,Weight (%)
+CS,Laboratory,20
+CS,Long Quiz,20
+CS,Assignments,10
+CS,Attendance,10
+E,Midterm Exam,15
+E,Final Exam,25
+L-CS,Lab Exercise,60
+L-E,Midterm Exam,15
+L-E,Final Exam,25

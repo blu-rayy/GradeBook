@@ -20,13 +20,13 @@ from calculations import get_student_scores, calculate_final_grade, get_letter_g
 pd.set_option('display.float_format', '{:.4f}'.format)
 
 def main():
-    def process_template(filepath):
+    def process_template(filepath, has_lab):
         try:
-            df = load_template(filepath)
+            df = load_template(filepath, has_lab)
             messagebox.showinfo("Success", "✅ Template Valid!")
 
-            df = get_student_scores(df)
-            final_grade = calculate_final_grade(df)
+            df = get_student_scores(df, has_lab)
+            final_grade = calculate_final_grade(df, has_lab)
             letter_grade = get_letter_grade(final_grade)
 
             print("\n📊Grade Breakdown:")
@@ -36,10 +36,12 @@ def main():
         except Exception as e:
             messagebox.showerror("Error", f"❌ {e}")
 
-    open_file_dialog(process_template)
+    has_lab = input("Have Laboratory? (Y/N): ").strip().upper() == 'Y'
+    open_file_dialog(lambda filepath: process_template(filepath, has_lab))
 
 if __name__ == "__main__":
     main()
+
 
 
 

@@ -1,75 +1,99 @@
-def get_student_scores(df):
+def get_student_scores(df, has_lab=False):
     print("\n📥 Enter your scores per subcategory:")
     scores = []
 
-    for _, row in df.iterrows():
-        category = row['Category'].strip().upper()
-        subcat = row['Subcategory'].strip()
+    # handling lab subjects
+    if has_lab:
+        lecture_scores = []
+        lab_scores = []
 
-        if subcat.lower() == 'attendance':
-            while True:
-                try:
-                    total_days = int(input(f"➤ Total number of classes for {subcat}: "))
-                    attended_days = int(input(f"➤ Days attended for {subcat}: "))
-                    if 0 <= attended_days <= total_days:
-                        percentage = (attended_days / total_days) * 100
-                        break
-                    else:
-                        print("⚠️ Days attended must be between 0 and total days.")
-                except ValueError:
-                    print("⚠️ Invalid input. Please enter numbers.")
-            scores.append(percentage)
+        # process Lecture Subjects (70% of final grade)
+        lecture_df = df[df['Category'].str.contains('CS|E', regex=True)]
+        for _, row in lecture_df.iterrows():
+            scores.append(process_score_for_subcategory(row))
 
-        elif category == 'E':
+        # process Lab Subjects (30% of final grade)
+        lab_df = df[df['Category'].str.contains('L-', regex=True)]
+        for _, row in lab_df.iterrows():
+            lab_scores.append(process_score_for_subcategory(row))
+
+        lecture_grade = sum(lecture_scores) * 0.7  # 70% weight for lecture
+        lab_grade = sum(lab_scores) * 0.3  # 30% weight for lab
+
+        # combine grades
+        return lecture_grade + lab_grade
+    else:
+        for _, row in df.iterrows():
+            scores.append(process_score_for_subcategory(row))
+
+    return sum(scores)
+
+
+def process_score_for_subcategory(row):
+    category = row['Category'].strip().upper()
+    subcat = row['Subcategory'].strip()
+
+    if subcat.lower() == 'attendance':
+        while True:
+            try:
+                total_days = int(input(f"➤ Total number of classes for {subcat}: "))
+                attended_days = int(input(f"➤ Days attended for {subcat}: "))
+                if 0 <= attended_days <= total_days:
+                    percentage = (attended_days / total_days) * 100
+                    break
+                else:
+                    print("⚠️ Days attended must be between 0 and total days.")
+            except ValueError:
+                print("⚠️ Invalid input. Please enter numbers.")
+        return percentage
+
+    elif category == 'E':
+        while True:
+            raw = input(f"➤ Enter score for {subcat} (format: score/max): ")
+            try:
+                score, max_score = map(float, raw.strip().split('/'))
+                if 0 <= score <= max_score and max_score > 0:
+                    percentage = (score / max_score) * 100
+                    break
+                else:
+                    print("⚠️ Score must be between 0 and max.")
+            except:
+                print("⚠️ Invalid format. Use score/max like 45/50")
+        return percentage
+
+    else:
+        while True:
+            try:
+                num = int(input(f"➤ Enter number of assessments for {subcat}: "))
+                if num > 0:
+                    break
+                else:
+                    print("Must be greater than 0.")
+            except ValueError:
+                print("Invalid input. Enter an integer.")
+
+        total_score = 0
+        total_max = 0
+        for i in range(1, num + 1):
             while True:
-                raw = input(f"➤ Enter score for {subcat} (format: score/max): ")
+                raw = input(f"   - Enter score {i} for {subcat} (format: score/max): ")
                 try:
                     score, max_score = map(float, raw.strip().split('/'))
                     if 0 <= score <= max_score and max_score > 0:
-                        percentage = (score / max_score) * 100
+                        total_score += score
+                        total_max += max_score
                         break
                     else:
                         print("⚠️ Score must be between 0 and max.")
                 except:
-                    print("⚠️ Invalid format. Use score/max like 45/50")
-            scores.append(percentage)
+                    print("⚠️ Invalid format. Use score/max like 25/30")
 
-        else:
-            while True:
-                try:
-                    num = int(input(f"➤ Enter number of assessments for {subcat}: "))
-                    if num > 0:
-                        break
-                    else:
-                        print("Must be greater than 0.")
-                except ValueError:
-                    print("Invalid input. Enter an integer.")
+        return (total_score / total_max) * 100 if total_max > 0 else 0
 
-            total_score = 0
-            total_max = 0
-            for i in range(1, num + 1):
-                while True:
-                    raw = input(f"   - Enter score {i} for {subcat} (format: score/max): ")
-                    try:
-                        score, max_score = map(float, raw.strip().split('/'))
-                        if 0 <= score <= max_score and max_score > 0:
-                            total_score += score
-                            total_max += max_score
-                            break
-                        else:
-                            print("⚠️ Score must be between 0 and max.")
-                    except:
-                        print("⚠️ Invalid format. Use score/max like 25/30")
 
-            percentage = (total_score / total_max) * 100 if total_max > 0 else 0
-            scores.append(percentage)
+def calculate_final_grade(df, has_lab=False):
+    return get_student_scores(df, has_lab)
 
-    df['Subcategory Score (%)'] = scores
-    df['Weighted Score'] = (df['Subcategory Score (%)'] * df['Weight (%)']) / 100
-    return df
-
-def calculate_final_grade(df):
-    return df['Weighted Score'].sum()
 
 def get_letter_grade(grade):
     if 70 <= grade <= 74: return 1.00
@@ -79,4 +103,3 @@ def get_letter_grade(grade):
     elif 89 <= grade <= 92: return 3.00
     elif 93 <= grade <= 96: return 3.50
     elif 97 <= grade <= 100: return 4.00
-
