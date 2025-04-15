@@ -10,7 +10,7 @@ def get_student_scores(df, has_lab=False):
         # process Lecture Subjects (70% of final grade)
         lecture_df = df[df['Category'].str.contains('CS|E', regex=True)]
         for _, row in lecture_df.iterrows():
-            scores.append(process_score_for_subcategory(row))
+            lecture_scores.append(process_score_for_subcategory(row))
 
         # process Lab Subjects (30% of final grade)
         lab_df = df[df['Category'].str.contains('L-', regex=True)]
@@ -34,61 +34,70 @@ def process_score_for_subcategory(row):
     subcat = row['Subcategory'].strip()
 
     if subcat.lower() == 'attendance':
-        while True:
-            try:
-                total_days = int(input(f"➤ Total number of classes for {subcat}: "))
-                attended_days = int(input(f"➤ Days attended for {subcat}: "))
-                if 0 <= attended_days <= total_days:
-                    percentage = (attended_days / total_days) * 100
-                    break
-                else:
-                    print("⚠️ Days attended must be between 0 and total days.")
-            except ValueError:
-                print("⚠️ Invalid input. Please enter numbers.")
-        return percentage
+        return process_attendance(subcat)
 
     elif category == 'E':
+        return process_exam(subcat)
+
+    else:
+        return process_assignments(subcat)
+
+
+def process_attendance(subcat):
+    while True:
+        try:
+            total_days = int(input(f"➤ Total number of classes for {subcat}: "))
+            attended_days = int(input(f"➤ Days attended for {subcat}: "))
+            if 0 <= attended_days <= total_days:
+                percentage = (attended_days / total_days) * 100
+                return percentage
+            else:
+                print("⚠️ Days attended must be between 0 and total days.")
+        except ValueError:
+            print("⚠️ Invalid input. Please enter numbers.")
+
+
+def process_exam(subcat):
+    while True:
+        raw = input(f"➤ Enter score for {subcat} (format: score/max): ")
+        try:
+            score, max_score = map(float, raw.strip().split('/'))
+            if 0 <= score <= max_score and max_score > 0:
+                return (score / max_score) * 100
+            else:
+                print("⚠️ Score must be between 0 and max.")
+        except:
+            print("⚠️ Invalid format. Use score/max like 45/50")
+
+
+def process_assignments(subcat):
+    while True:
+        try:
+            num = int(input(f"➤ Enter number of assessments for {subcat}: "))
+            if num > 0:
+                break
+            else:
+                print("Must be greater than 0.")
+        except ValueError:
+            print("Invalid input. Enter an integer.")
+
+    total_score = 0
+    total_max = 0
+    for i in range(1, num + 1):
         while True:
-            raw = input(f"➤ Enter score for {subcat} (format: score/max): ")
+            raw = input(f"   - Enter score {i} for {subcat} (format: score/max): ")
             try:
                 score, max_score = map(float, raw.strip().split('/'))
                 if 0 <= score <= max_score and max_score > 0:
-                    percentage = (score / max_score) * 100
+                    total_score += score
+                    total_max += max_score
                     break
                 else:
                     print("⚠️ Score must be between 0 and max.")
             except:
-                print("⚠️ Invalid format. Use score/max like 45/50")
-        return percentage
+                print("⚠️ Invalid format. Use score/max like 25/30")
 
-    else:
-        while True:
-            try:
-                num = int(input(f"➤ Enter number of assessments for {subcat}: "))
-                if num > 0:
-                    break
-                else:
-                    print("Must be greater than 0.")
-            except ValueError:
-                print("Invalid input. Enter an integer.")
-
-        total_score = 0
-        total_max = 0
-        for i in range(1, num + 1):
-            while True:
-                raw = input(f"   - Enter score {i} for {subcat} (format: score/max): ")
-                try:
-                    score, max_score = map(float, raw.strip().split('/'))
-                    if 0 <= score <= max_score and max_score > 0:
-                        total_score += score
-                        total_max += max_score
-                        break
-                    else:
-                        print("⚠️ Score must be between 0 and max.")
-                except:
-                    print("⚠️ Invalid format. Use score/max like 25/30")
-
-        return (total_score / total_max) * 100 if total_max > 0 else 0
+    return (total_score / total_max) * 100 if total_max > 0 else 0
 
 
 def calculate_final_grade(df, has_lab=False):
