@@ -12,31 +12,35 @@ Phase 3: GUI with Tkinter
 '''
 
 import pandas as pd
+from tkinter import messagebox
+from gui import open_file_dialog
 from template_config import load_template
 from calculations import get_student_scores, calculate_final_grade, get_letter_grade
 
-pd.set_option('display.float_format', '{:.2f}'.format)
+pd.set_option('display.float_format', '{:.4f}'.format)
 
 def main():
-    filepath = input("📂 Enter path to grading template CSV: ")
+    def process_template(filepath):
+        try:
+            df = load_template(filepath)
+            messagebox.showinfo("Success", "✅ Template Valid!")
 
-    try:
-        df = load_template(filepath)
-        print("✅ Template Valid!")
+            df = get_student_scores(df)
+            final_grade = calculate_final_grade(df)
+            letter_grade = get_letter_grade(final_grade)
 
-        course_name = input("Enter Course Name: ")
-        
+            print("\n📊Grade Breakdown:")
+            print(df[['Category', 'Subcategory', 'Subcategory Score (%)', 'Weight (%)', 'Weighted Score']])
+            print(f"\n🎯 Final Grade: {final_grade:.4f}% ({letter_grade})")
 
-        df = get_student_scores(df)
-        final_grade = calculate_final_grade(df)
-        letter_grade = get_letter_grade(final_grade)
+        except Exception as e:
+            messagebox.showerror("Error", f"❌ {e}")
 
-        print("\n📊 " + course_name + " Grade Breakdown: ")
-        print(df[['Category', 'Subcategory', 'Subcategory Score (%)', 'Weight (%)', 'Weighted Score']])
-        print(f"\n🎯 Final Grade: {final_grade:.2f}% ({letter_grade})")
-
-    except Exception as e:
-        print(f"❌ {e}")
+    open_file_dialog(process_template)
 
 if __name__ == "__main__":
     main()
+
+
+
+

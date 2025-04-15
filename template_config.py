@@ -1,5 +1,3 @@
-# template_config.py
-
 import pandas as pd
 
 def load_template(filepath):
