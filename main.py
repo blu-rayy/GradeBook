@@ -2,9 +2,8 @@
 Phase 1: Grade Calculator
 * Template (DONE)
 * Grade Breakdown (DONE)
-* Lecture Grade First
 * Numeric and Letter Grade (DONE)
-* Option for Lecture or Laboratory
+* Option for Lecture or Laboratory (DONE)
 * Option for Midterm Breakdown
 
 Phase 2: Persistent Data on SQLite
