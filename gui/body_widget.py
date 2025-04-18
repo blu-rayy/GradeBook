@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QLabel
 from PyQt5.QtCore import Qt
 from constants import *
 from ui_components import create_section, create_separator
@@ -14,22 +14,31 @@ class BodyWidget(QWidget):
 
     # Main layout for body
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setContentsMargins(80, 0, 80, 0)
         layout.setSpacing(0)
 
     # Title Section
-        title_section, _ = create_section(GREEN_TEAL, "TITLE_SECTION")
+        title_section, title_layout = create_section(GREEN_TEAL)
         title_section.setFixedHeight(TITLE_SECTION_HEIGHT)
         title_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+        title_content = QWidget()
+        title_content_layout = QHBoxLayout(title_content)
+        title_content_layout.setContentsMargins(80, 0, 80, 0)
+        title_content_layout.setSpacing(0)
+
+        title_label = QLabel("Course Name")
+        title_label.setStyleSheet(f"font-family: {HEADING_FONT_BOLD}; font-size: 24px; color: {SNOW_WHITE};")
+        title_label.setAlignment(Qt.AlignCenter)
+        title_content_layout.addWidget(title_label)
+
+        title_layout.addWidget(title_content)
         layout.addWidget(title_section)
 
-    # Padding container for left/right padding of 80px
+    # Body Section
         padded_container = QWidget()
         padded_layout = QHBoxLayout(padded_container)
-        padded_layout.setContentsMargins(80, 0, 80, 0)
         padded_layout.setSpacing(0)
-
-    # Sections container inside padded container
         sections_container = QWidget()
         sections_container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         sections_layout = QHBoxLayout(sections_container)

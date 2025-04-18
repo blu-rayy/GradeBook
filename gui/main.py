@@ -1,17 +1,16 @@
 import sys
+import os
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QFontDatabase
 from constants import *
+from load_font import load_fonts
 from main_window import MainWindow
+
+os.environ["QT_LOGGING_RULES"] = "qt.qpa.fonts=false"
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
-    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Bold.ttf")
-    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-ExtraBold.ttf")
-    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Medium.ttf")
-    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Regular.ttf")
-    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-SemiBold.ttf")
+    load_fonts()
 
     window = MainWindow()
     window.show()

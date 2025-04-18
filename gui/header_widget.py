@@ -1,8 +1,8 @@
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy, QLabel, QHBoxLayout
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt
 from constants import *
-from ui_components import create_section, create_separator
+from ui_components import create_section
 
 class HeaderWidget(QWidget):
     def __init__(self, parent=None):
