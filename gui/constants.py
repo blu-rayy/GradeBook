@@ -1,11 +1,16 @@
+# Colors
 MID_TEAL = "#145A5A"
 DARK_TEAL = "#002832"
 GREEN_TEAL = "#00674F"
 SNOW_WHITE = "#E3F9FA"
 
+HEADING_FONT = "Narnoor Regular"
+HEADING_FONT_BOLD = "Narnoor Bold"
+HEADING_FONT_EXTRABOLD = "Narnoor ExtraBold"
+HEADING_FONT_MEDIUM = "Narnoor Medium"
+HEADING_FONT_SEMIBOLD = "Narnoor SemiBold"
 
-HEADING_FONT_FAMILY = "Arial"  # Placeholder for narnoor font
-BODY_FONT_FAMILY = "Arial"     # Placeholder for inter font
+BODY_FONT = "Arial"
 
 HEADER_HEIGHT = 65
 FOOTER_HEIGHT = 65

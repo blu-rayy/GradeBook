@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt
 from constants import *
 from ui_components import create_section, create_separator
@@ -10,7 +10,6 @@ class HeaderWidget(QWidget):
         self.init_ui()
         
     def init_ui(self):
-        print(MID_TEAL)  # Check if it prints #145A5A
 
         self.setFixedHeight(HEADER_HEIGHT)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
@@ -36,7 +35,8 @@ class HeaderWidget(QWidget):
 
         # Text
         term_label = QLabel("2nd Year – Third Trimester")
-        term_label.setStyleSheet(f"color: {SNOW_WHITE}; font-size: 14px;")
+        term_label.setFont(QFont(HEADING_FONT, 14))
+        term_label.setStyleSheet(f"color: {SNOW_WHITE}")
 
         left_inner_layout.addWidget(calendar_icon)
         left_inner_layout.addWidget(term_label)
@@ -53,7 +53,8 @@ class HeaderWidget(QWidget):
         # Label Placeholder
         logo_label = QLabel("LOGO")
         logo_label.setAlignment(Qt.AlignCenter)  
-        logo_label.setStyleSheet(f"color: {SNOW_WHITE}; font-size: 20px;")
+        logo_label.setFont(QFont(HEADING_FONT_EXTRABOLD, 20))
+        logo_label.setStyleSheet(f"color: {SNOW_WHITE};")
         middle_section.layout().setContentsMargins(50, 0, 50, 0)
         middle_section.layout().addWidget(logo_label)
         layout.addWidget(middle_section, HEADER_MIDDLE_PROPORTION)
@@ -75,7 +76,8 @@ class HeaderWidget(QWidget):
 
         # Name label
         name_label = QLabel("Kristian David")
-        name_label.setStyleSheet(f"color: {SNOW_WHITE}; font-size: 14px;")
+        name_label.setFont(QFont(HEADING_FONT, 14))
+        name_label.setStyleSheet(f"color: {SNOW_WHITE}")
 
         right_inner_layout.addWidget(profile_pic)
         right_inner_layout.addWidget(name_label)

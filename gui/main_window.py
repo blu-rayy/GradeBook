@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QFrame
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout
 from constants import *
 from header_widget import HeaderWidget
 from body_widget import BodyWidget
@@ -10,27 +10,23 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("GradeBook")
         self.resize(1920, 1080)
-        self.setMinimumSize(1024, 768)  # Set minimum size to prevent too small resizing
-        
-        # Set up central widget and main layout
+        self.setMinimumSize(1024, 768)
+
+        # Central widget & layout
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         self.main_layout = QVBoxLayout(self.central_widget)
         self.main_layout.setContentsMargins(0, 0, 0, 0)
         self.main_layout.setSpacing(0)
-        
-        # Add the header widget
+
+        # Add custom widgets
         self.header = HeaderWidget()
         self.main_layout.addWidget(self.header)
-        
-        
-        # Add the body widget
+
         self.body = BodyWidget()
         self.main_layout.addWidget(self.body)
-        
-        # Add separator
+
         self.main_layout.addWidget(create_separator("horizontal", "red"))
-        
-        # Add the footer widget
+
         self.footer = FooterWidget()
         self.main_layout.addWidget(self.footer)
