@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 from constants import *
 from ui_components import create_section, create_separator
@@ -9,6 +10,8 @@ class HeaderWidget(QWidget):
         self.init_ui()
         
     def init_ui(self):
+        print(MID_TEAL)  # Check if it prints #145A5A
+
         self.setFixedHeight(HEADER_HEIGHT)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.setStyleSheet(f"background-color: {MID_TEAL};")
@@ -19,22 +22,63 @@ class HeaderWidget(QWidget):
         layout.setSpacing(0)
         
         # Left Section
-        left_section, _ = create_section("rgba(255, 255, 255, 0.1)", "LEFT_SECTION")
+        left_section, left_layout = create_section(MID_TEAL)
         left_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        left_inner_layout = QHBoxLayout()
+        left_inner_layout.setContentsMargins(10, 0, 0, 0)
+        left_inner_layout.setSpacing(10)
+
+        # Icon
+        calendar_icon = QLabel()
+        calendar_icon.setPixmap(QPixmap("assets\icons\calendar.svg").scaled(24, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        calendar_icon.setFixedSize(24, 24)
+
+        # Text
+        term_label = QLabel("2nd Year – Third Trimester")
+        term_label.setStyleSheet(f"color: {SNOW_WHITE}; font-size: 14px;")
+
+        left_inner_layout.addWidget(calendar_icon)
+        left_inner_layout.addWidget(term_label)
+        left_inner_layout.addStretch()
+
+        left_layout.addLayout(left_inner_layout)
         layout.addWidget(left_section, HEADER_LEFT_PROPORTION)
         
-        # Separator
-        layout.addWidget(create_separator("vertical", "white"))
-        
         # Middle Section
-        middle_section, _ = create_section("rgba(255, 255, 255, 0.2)", "MIDDLE_SECTION")
+        middle_section, _ = create_section(MID_TEAL)
         middle_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         layout.addWidget(middle_section, HEADER_MIDDLE_PROPORTION)
-        
-        # Separator
-        layout.addWidget(create_separator("vertical", "white"))
-        
-        # Right Section
-        right_section, _ = create_section("rgba(255, 255, 255, 0.1)", "RIGHT_SECTION")
+
+        # Label Placeholder
+        logo_label = QLabel("LOGO")
+        logo_label.setAlignment(Qt.AlignCenter)  
+        logo_label.setStyleSheet(f"color: {SNOW_WHITE}; font-size: 20px;")
+        middle_section.layout().setContentsMargins(50, 0, 50, 0)
+        middle_section.layout().addWidget(logo_label)
+        layout.addWidget(middle_section, HEADER_MIDDLE_PROPORTION)
+
+        #Right Section
+        right_section, right_layout = create_section(MID_TEAL)
         right_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+
+        right_inner_layout = QHBoxLayout()
+        right_inner_layout.setContentsMargins(0, 0, 10, 0)
+        right_inner_layout.setSpacing(10)
+        right_inner_layout.addStretch()
+
+        # Profile image
+        profile_pic = QLabel()
+        profile_pic.setPixmap(QPixmap("assets\icons\profile.png").scaled(32, 32, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        profile_pic.setFixedSize(32, 32)
+        profile_pic.setStyleSheet("border-radius: 16px;")
+
+        # Name label
+        name_label = QLabel("Kristian David")
+        name_label.setStyleSheet(f"color: {SNOW_WHITE}; font-size: 14px;")
+
+        right_inner_layout.addWidget(profile_pic)
+        right_inner_layout.addWidget(name_label)
+
+        right_layout.addLayout(right_inner_layout)
         layout.addWidget(right_section, HEADER_RIGHT_PROPORTION)

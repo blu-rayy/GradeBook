@@ -23,6 +23,6 @@ def create_separator(orientation="horizontal", color="black"):
         separator.setFrameShape(QFrame.VLine)
     
     separator.setFrameShadow(QFrame.Sunken)
-    separator.setStyleSheet(f"color: {color};")  # This line can be removed when development is complete
+    #separator.setStyleSheet(f"color: {color};")  # This line can be removed when development is complete
     
     return separator

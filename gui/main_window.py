@@ -8,7 +8,7 @@ from ui_components import create_separator
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Application Layout")
+        self.setWindowTitle("GradeBook")
         self.resize(1920, 1080)
         self.setMinimumSize(1024, 768)  # Set minimum size to prevent too small resizing
         
@@ -23,8 +23,6 @@ class MainWindow(QMainWindow):
         self.header = HeaderWidget()
         self.main_layout.addWidget(self.header)
         
-        # Add separator
-        self.main_layout.addWidget(create_separator("horizontal", "red"))
         
         # Add the body widget
         self.body = BodyWidget()
