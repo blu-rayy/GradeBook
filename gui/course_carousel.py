@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QScrollArea, QHBoxLayout, QPushButton, QSizePolicy
+from PyQt5.QtWidgets import QWidget, QScrollArea, QHBoxLayout, QPushButton, QSizePolicy, QFrame
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QAbstractAnimation
 from PyQt5.QtGui import QFont
 from constants import *
@@ -15,9 +15,12 @@ class CourseCarousel(QWidget):
         self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scroll.setWidgetResizable(True)
         self.scroll.setAlignment(Qt.AlignCenter)
+        self.scroll.setFrameShape(QFrame.NoFrame)  # Remove the frame border
+        self.scroll.setStyleSheet("QScrollArea { border: none; background: transparent; }")
 
         container = QWidget()
         container.setFixedHeight(63)
+        container.setStyleSheet("background: transparent; border: none;")
 
         self.courses_layout = QHBoxLayout(container)
         self.courses_layout.setContentsMargins(0, 0, 0, 0)
@@ -49,12 +52,17 @@ class CourseCarousel(QWidget):
             QPushButton {{
                 background-color: white;
                 color: black;
-                border: 0px solid #ccc;
+                border: none;
                 padding: 0px;
+                text-align: center;
             }}
             QPushButton:hover {{
                 background-color: {MID_TEAL};
                 color: {SNOW_WHITE};
+            }}
+            QPushButton:focus {{
+                border: none;
+                outline: none;
             }}
         """)
 

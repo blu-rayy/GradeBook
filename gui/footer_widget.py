@@ -21,10 +21,18 @@ class FooterWidget(QWidget):
         layout.setSpacing(0)
         
         # Home Section
-        home_section, _ = create_section("rgba(255, 255, 255, 0.1)", "HOME")
+        home_section, home_layout = create_section("rgba(255, 255, 255, 0.1)")
         home_section.setFixedWidth(HOME_SECTION_WIDTH)
         home_section.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         layout.addWidget(home_section)
+
+        # Icon
+        home_icon = QLabel()
+        home_icon.setPixmap(QPixmap(r"assets\icons\home.svg").scaled(24, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        home_icon.setAlignment(Qt.AlignCenter)
+        home_icon.setCursor(QCursor(Qt.PointingHandCursor))
+        home_layout.setAlignment(Qt.AlignCenter)
+        home_layout.addWidget(home_icon)
         
         # Course Section
         course_section, course_layout = create_section("rgba(255, 255, 255, 0.2)")
@@ -42,9 +50,6 @@ class FooterWidget(QWidget):
         course_layout.addWidget(self.carousel)
 
         layout.addWidget(course_section)
-        
-        # Separator
-        layout.addWidget(create_separator("vertical", "white"))
         
         # Next Section
         next_section, next_layout = create_section("rgba(255, 255, 255, 0.1)")
