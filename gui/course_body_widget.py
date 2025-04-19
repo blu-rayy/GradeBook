@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QLabel
 from PyQt5.QtCore import Qt
-from ui_components import create_section
+from gui.ui_components import create_section
 
 class BodyWidget(QWidget):
     def __init__(self, ui_config=None, parent=None):

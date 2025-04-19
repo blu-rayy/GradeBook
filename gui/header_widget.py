@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy, QLabel
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtCore import Qt
-from ui_components import create_section
+from gui.ui_components import create_section
 
 class HeaderWidget(QWidget):
     def __init__(self, ui_config=None, parent=None):

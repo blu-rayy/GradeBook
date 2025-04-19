@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy, QLabel
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QCursor
-from ui_components import create_section
-from course_carousel import CourseCarousel
+from gui.ui_components import create_section
+from gui.course_carousel import CourseCarousel
 
 class FooterWidget(QWidget):
     def __init__(self, ui_config=None, parent=None):

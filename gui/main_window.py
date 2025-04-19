@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout
-from header_widget import HeaderWidget
-from body_widget import BodyWidget
-from footer_widget import FooterWidget
+from gui.header_widget import HeaderWidget
+from gui.course_body_widget import BodyWidget
+from gui.footer_widget import FooterWidget
 
 class MainWindow(QMainWindow):
     def __init__(self, ui_config=None):
