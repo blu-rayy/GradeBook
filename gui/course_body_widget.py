@@ -44,7 +44,7 @@ class BodyWidget(QWidget):
         sections_layout = QHBoxLayout(sections_container)
         sections_layout.setContentsMargins(0, 0, 0, 0)
         sections_layout.setSpacing(0)
-
+ 
     # CS Others Section
         cs_others, _ = create_section("rgba(20, 90, 90, 0.1)", "CS_OTHERS_SECTION")
         cs_others.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
