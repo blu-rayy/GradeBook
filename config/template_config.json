@@ -1,0 +1,20 @@
+{
+    "columns": {
+      "category": "Category",
+      "subcategory": "Subcategory",
+      "weight_percentage": "Weight (%)"
+    },
+    "categories": {
+      "cs": "CS",
+      "e": "E",
+      "lab_cs": "L-CS",
+      "lab_e": "L-E"
+    },
+    "weight_totals": {
+      "cs": 60,
+      "e": 40,
+      "lab_cs": 60,
+      "lab_e": 40
+    }
+  }
+  
