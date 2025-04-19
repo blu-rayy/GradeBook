@@ -1,11 +1,11 @@
 from PyQt5.QtWidgets import QWidget, QScrollArea, QHBoxLayout, QPushButton, QSizePolicy, QFrame
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QAbstractAnimation
 from PyQt5.QtGui import QFont
-from constants import *
 
 class CourseCarousel(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, ui_config=None, parent=None):
         super().__init__(parent)
+        self.ui_config = ui_config
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         self.layout = QHBoxLayout(self)
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -47,7 +47,14 @@ class CourseCarousel(QWidget):
     def create_course_box(self, name):
         btn = QPushButton(name)
         btn.setFixedSize(320, 63)
-        btn.setFont(QFont(HEADING_FONT_MEDIUM, 16))
+        
+        # Use ui_config for font and colors
+        font_name = self.ui_config["fonts"]["HEADING_FONT_MEDIUM"]
+        btn.setFont(QFont(font_name, 16))
+        
+        mid_teal = self.ui_config["colors"]["MID_TEAL"]
+        snow_white = self.ui_config["colors"]["SNOW_WHITE"]
+        
         btn.setStyleSheet(f"""
             QPushButton {{
                 background-color: white;
@@ -57,8 +64,8 @@ class CourseCarousel(QWidget):
                 text-align: center;
             }}
             QPushButton:hover {{
-                background-color: {MID_TEAL};
-                color: {SNOW_WHITE};
+                background-color: {mid_teal};
+                color: {snow_white};
             }}
             QPushButton:focus {{
                 border: none;

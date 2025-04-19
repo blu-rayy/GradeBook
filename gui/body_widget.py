@@ -1,16 +1,16 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QLabel
 from PyQt5.QtCore import Qt
-from constants import *
-from ui_components import create_section, create_separator
+from ui_components import create_section
 
 class BodyWidget(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, ui_config=None, parent=None):
         super().__init__(parent)
+        self.ui_config = ui_config
         self.init_ui()
         
     def init_ui(self):
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.setStyleSheet(f"background-color: {SNOW_WHITE};")
+        self.setStyleSheet(f"background-color: {self.ui_config['colors']['SNOW_WHITE']};")
 
     # Main layout for body
         layout = QVBoxLayout(self)
@@ -18,8 +18,8 @@ class BodyWidget(QWidget):
         layout.setSpacing(0)
 
     # Title Section
-        title_section, title_layout = create_section(GREEN_TEAL)
-        title_section.setFixedHeight(TITLE_SECTION_HEIGHT)
+        title_section, title_layout = create_section(create_section(self.ui_config['colors']['GREEN_TEAL']))
+        title_section.setFixedHeight(self.ui_config['dimensions']['TITLE_SECTION_HEIGHT'])
         title_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
         title_content = QWidget()
@@ -28,7 +28,7 @@ class BodyWidget(QWidget):
         title_content_layout.setSpacing(0)
 
         title_label = QLabel("Course Name")
-        title_label.setStyleSheet(f"font-family: {HEADING_FONT_BOLD}; font-size: 24px; color: {SNOW_WHITE};")
+        title_label.setStyleSheet(f"font-family: {self.ui_config['fonts']['HEADING_FONT_BOLD']}; font-size: 24px; color: {self.ui_config['colors']['GREEN_TEAL']};")
         title_label.setAlignment(Qt.AlignCenter)
         title_content_layout.addWidget(title_label)
 
@@ -48,17 +48,17 @@ class BodyWidget(QWidget):
     # CS Others Section
         cs_others, _ = create_section("rgba(20, 90, 90, 0.1)", "CS_OTHERS_SECTION")
         cs_others.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sections_layout.addWidget(cs_others, CS_OTHERS_PROPORTION)
+        sections_layout.addWidget(cs_others, self.ui_config['dimensions']['CS_OTHERS_PROPORTION'])
 
     # CS SA Exams Section
         cs_sa_exams, _ = create_section("rgba(20, 90, 90, 0.2)", "CS_SA_EXAMS_SECTION")
         cs_sa_exams.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sections_layout.addWidget(cs_sa_exams, CS_SA_EXAMS_PROPORTION)
+        sections_layout.addWidget(cs_sa_exams, self.ui_config['dimensions']['CS_SA_EXAMS_PROPORTION'])
 
     # Grades Breakdown Section
         grades_breakdown, _ = create_section("rgba(20, 90, 90, 0.1)", "GRADES_BREAKDOWN_SECTION")
         grades_breakdown.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sections_layout.addWidget(grades_breakdown, GRADES_BREAKDOWN_PROPORTION)
+        sections_layout.addWidget(grades_breakdown, self.ui_config['dimensions']['GRADES_BREAKDOWN_PROPORTION'])
 
         padded_layout.addWidget(sections_container)
         layout.addWidget(padded_container)
