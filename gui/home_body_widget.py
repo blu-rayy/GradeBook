@@ -65,7 +65,6 @@ class HomeBodyWidget(QWidget):
             #content_section {
                 background-color: white;
                 border-radius: 20px;
-                overflow: hidden;
             }
         """)
     
@@ -163,9 +162,11 @@ class HomeBodyWidget(QWidget):
         for course in course_data:
             course_item = QWidget()
             course_item.setFixedHeight(70)
+            course_item.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
             course_item_layout = QHBoxLayout(course_item)
             course_item_layout.setContentsMargins(0, 0, 0, 0)
             course_item_layout.setSpacing(0)
+            
             
             column_widths = [width for _, width in column_titles]
             
@@ -184,20 +185,39 @@ class HomeBodyWidget(QWidget):
                 course_item_layout.addWidget(item_label)
             
             items_layout.addWidget(course_item)
+            items_subsection.setMinimumWidth(1635)
+
         
         scroll_area.setWidget(items_subsection)
 
         # calculating dynamic height
+        header_height = 57
+        add_course_height = 55
         row_height = 70 # height of each row
         max_rows = 9 # max rows before displaying a scroll bar
         actual_rows = len(course_data)  
         display_rows = min(actual_rows, max_rows) 
         dynamic_height = display_rows * row_height  # calculating height
 
-        scroll_area.setFixedHeight(dynamic_height)
+        max_display_height = max_rows * row_height
+        actual_display_height = actual_rows * row_height
+        total_content_height = header_height + dynamic_height + add_course_height
+        final_content_height = min(total_content_height, 720)
+
+        content_section.setFixedHeight(final_content_height)
+
+        scroll_area.setMinimumHeight(row_height) 
         scroll_area.setWidget(items_subsection)
 
         if actual_rows <= max_rows:
+            items_subsection.setFixedHeight(actual_display_height)
+        else:
+            
+            items_subsection.setMinimumHeight(actual_display_height)
+
+        scroll_area.setFixedHeight(max_display_height)
+
+        if actual_rows <= 9:
             scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         else:
             scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -231,6 +251,14 @@ class HomeBodyWidget(QWidget):
         body_layout.addWidget(content_section)
         layout.addWidget(body_section, 0, Qt.AlignTop)
 
+        print(f"Content section height: {content_section.height()}")
+        print(f"Scroll area height: {scroll_area.height()}")
+        print(f"Items subsection height: {items_subsection.sizeHint().height()}")
+        print(f"Number of courses: {len(course_data)}")
+        items_needed_height = actual_rows * row_height
+
+        print(f"Calculated needed height: {items_needed_height}")
+
     # filling list with SQL rows
     def fetch_course_data(self):
         course_data = []
@@ -259,7 +287,13 @@ class HomeBodyWidget(QWidget):
             course_data = [
                 ("CCS43", "Applications Development and Emerging Technologies (LEC)", "TN27", "2", "3.50", "-"),
                 ("CCS43L", "Applications Development and Emerging Technologies (LAB)", "TN27", "1", "3.50", "-"),
-                ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-")
+                ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-"),
+                ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-"),
+                ("CS23", "Automata Theory and Formal Languages", "TN27", "3", "3.00", "-"),
+                ("CS48", "CS SPEC 1 - Structured Programming Language (LEC)", "TN27", "2", "3.50", "-"),
+                ("CS48L", "CS SPEC 1 - Structured Programming Language (LAB)", "TN27", "1", "3.50", "-"),
+                ("CS51", "CS ELECTIVE - Parallel and Distributive Computing", "TN27", "3", "3.50", "-"),
+                ("GED31", "Purposive Communication", "TN27", "3", "4.00", "-")
             ]
         
         return course_data
