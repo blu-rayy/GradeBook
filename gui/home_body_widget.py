@@ -251,14 +251,6 @@ class HomeBodyWidget(QWidget):
         body_layout.addWidget(content_section)
         layout.addWidget(body_section, 0, Qt.AlignTop)
 
-        print(f"Content section height: {content_section.height()}")
-        print(f"Scroll area height: {scroll_area.height()}")
-        print(f"Items subsection height: {items_subsection.sizeHint().height()}")
-        print(f"Number of courses: {len(course_data)}")
-        items_needed_height = actual_rows * row_height
-
-        print(f"Calculated needed height: {items_needed_height}")
-
     # filling list with SQL rows
     def fetch_course_data(self):
         course_data = []
