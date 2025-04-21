@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy, QFrame, QScrollArea
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy, QFrame, QScrollArea, QGraphicsDropShadowEffect
+from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt
 from gui.ui_components import create_section
 import sqlite3
@@ -63,7 +64,8 @@ class HomeBodyWidget(QWidget):
         content_section.setStyleSheet("""
             #content_section {
                 background-color: white;
-                border-radius: 15px;
+                border-radius: 20px;
+                overflow: hidden;
             }
         """)
     
@@ -118,7 +120,7 @@ class HomeBodyWidget(QWidget):
         scroll_area.setStyleSheet("""
             QScrollArea {
                 border: none;
-                background-color: white;
+                background-color: transparent;
             }
             QScrollBar:vertical {
                 border: none;
@@ -152,8 +154,6 @@ class HomeBodyWidget(QWidget):
             }
         """)
         scroll_area.setWidget(items_subsection)
-        content_layout.addWidget(scroll_area, 0, Qt.AlignTop)
-        content_layout.setAlignment(Qt.AlignTop)
         items_subsection.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
         
         # fetch database courses
@@ -202,12 +202,17 @@ class HomeBodyWidget(QWidget):
         else:
             scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
 
-        content_layout.addWidget(scroll_area)
+        content_layout.addWidget(scroll_area, 0, Qt.AlignTop)
+        content_layout.setAlignment(Qt.AlignTop)
 
         # ADD_COURSE_SECTION
         add_course_section = QWidget()
         add_course_section.setFixedHeight(55)
-        add_course_section.setStyleSheet("background-color: white;")
+        add_course_section.setStyleSheet("""
+            background-color: white;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        """)
         
         add_course_layout = QHBoxLayout(add_course_section)
         add_course_layout.setContentsMargins(20, 0, 0, 0)
@@ -254,13 +259,7 @@ class HomeBodyWidget(QWidget):
             course_data = [
                 ("CCS43", "Applications Development and Emerging Technologies (LEC)", "TN27", "2", "3.50", "-"),
                 ("CCS43L", "Applications Development and Emerging Technologies (LAB)", "TN27", "1", "3.50", "-"),
-                ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-"),
-                ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-"),
-                ("CS23", "Automata Theory and Formal Languages", "TN27", "3", "3.00", "-"),
-                ("CS48", "CS SPEC 1 - Structured Programming Language (LEC)", "TN27", "2", "3.50", "-"),
-                ("CS48L", "CS SPEC 1 - Structured Programming Language (LAB)", "TN27", "1", "3.50", "-"),
-                ("CS51", "CS ELECTIVE - Parallel and Distributive Computing", "TN27", "3", "3.50", "-"),
-                ("GED31", "Purposive Communication", "TN27", "3", "4.00", "-")
+                ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-")
             ]
         
         return course_data

@@ -1,12 +1,12 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout
 from gui.header_widget import HeaderWidget
 from gui.course_body_widget import CourseBodyWidget
-from gui.home_body_widget import HomeBodyWidget
 from gui.footer_widget import FooterWidget
 
 class MainWindow(QMainWindow):
     def __init__(self, ui_config=None):
         super().__init__()
+        self.setStyleSheet("background-color: white;")
         self.ui_config = ui_config 
         self.setWindowTitle("GradeBook")
         self.resize(1920, 1080)
