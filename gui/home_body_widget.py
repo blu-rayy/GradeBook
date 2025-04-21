@@ -13,20 +13,21 @@ class HomeBodyWidget(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(70, 0, 70, 0)
         layout.setSpacing(0) 
-        self.setStyleSheet("QWidget { margin: 0; padding: 0; }")
+        self.setStyleSheet("background-color: white;")
 
         # TITLE_SECTION: 1780x77
             # Title Section
         title_section, title_layout = create_section(create_section(self.ui_config['colors']['GREEN_TEAL']))
         title_section.setFixedHeight(self.ui_config['dimensions']['TITLE_SECTION_HEIGHT'])
         title_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        title_section.setStyleSheet("background-color: white;")
 
         title_content = QWidget()
         title_content_layout = QHBoxLayout(title_content)
         title_content_layout.setContentsMargins(80, 0, 80, 0)
         title_content_layout.setSpacing(0)
 
-        title_label = QLabel("kristian's GradeBook")
+        title_label = QLabel("Kristian's GradeBook")
         title_label.setStyleSheet(f"font-family: {self.ui_config['fonts']['HEADING_FONT_BOLD']}; font-size: 24px; color: {self.ui_config['colors']['GREEN_TEAL']};")
         title_label.setAlignment(Qt.AlignCenter)
         title_content_layout.addWidget(title_label)
@@ -40,6 +41,7 @@ class HomeBodyWidget(QWidget):
         body_section.setFixedSize(1780, 913)
         body_section.setStyleSheet("""
             #body_section {
+                background-color: white;
                 margin: 0px;
                 padding: 0px;
                 margin-top: 0px;
@@ -54,14 +56,23 @@ class HomeBodyWidget(QWidget):
         # CONTENT_SECTION: 1635x544 with dynamic height
         content_section = QWidget()
         content_section.setFixedWidth(1635)
+        content_section.setMaximumHeight(720)
+        content_section.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
+
         content_section.setObjectName("content_section")
         content_section.setStyleSheet("""
             #content_section {
-                background-color: transparent;
-                border-radius: 5px;
+                background-color: white;
+                border-radius: 15px;
             }
         """)
-        
+    
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(15)
+        shadow.setOffset(0, 5)
+        shadow.setColor(QColor(0, 0, 0, 80)) 
+        content_section.setGraphicsEffect(shadow)
+
         content_layout = QVBoxLayout(content_section)
         content_layout.setContentsMargins(0, 0, 0, 0)
         content_layout.setSpacing(0)
@@ -71,8 +82,8 @@ class HomeBodyWidget(QWidget):
         title_subsection.setFixedHeight(57)
         title_subsection.setStyleSheet(f"""
             background-color: {self.ui_config['colors']['MID_TEAL']};
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
         """)
         
         title_subsection_layout = QHBoxLayout(title_subsection)
@@ -107,7 +118,7 @@ class HomeBodyWidget(QWidget):
         scroll_area.setStyleSheet("""
             QScrollArea {
                 border: none;
-                background-color: transparent;
+                background-color: white;
             }
             QScrollBar:vertical {
                 border: none;
@@ -144,7 +155,6 @@ class HomeBodyWidget(QWidget):
         content_layout.addWidget(scroll_area, 0, Qt.AlignTop)
         content_layout.setAlignment(Qt.AlignTop)
         items_subsection.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
-
         
         # fetch database courses
         course_data = self.fetch_course_data()
@@ -197,7 +207,7 @@ class HomeBodyWidget(QWidget):
         # ADD_COURSE_SECTION
         add_course_section = QWidget()
         add_course_section.setFixedHeight(55)
-        add_course_section.setStyleSheet("background-color: transparent;")
+        add_course_section.setStyleSheet("background-color: white;")
         
         add_course_layout = QHBoxLayout(add_course_section)
         add_course_layout.setContentsMargins(20, 0, 0, 0)
