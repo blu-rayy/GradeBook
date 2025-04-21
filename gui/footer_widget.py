@@ -30,6 +30,7 @@ class FooterWidget(QWidget):
         home_icon.setPixmap(QPixmap(r"assets\icons\home.svg").scaled(24, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation))
         home_icon.setAlignment(Qt.AlignCenter)
         home_icon.setCursor(QCursor(Qt.PointingHandCursor))
+        home_icon.mousePressEvent = self.go_to_home_page
         home_layout.setAlignment(Qt.AlignCenter)
         home_layout.addWidget(home_icon)
         
@@ -77,3 +78,17 @@ class FooterWidget(QWidget):
     def scroll_left(self, _):
         if hasattr(self, 'carousel'):
             self.carousel.scroll_left()
+
+    def go_to_home_page(self, event):
+        # Find the main window (parent of parent)
+        main_window = self.window()
+    
+        # Remove the current body widget
+        if hasattr(main_window, 'body'):
+            main_window.main_layout.removeWidget(main_window.body)
+            main_window.body.deleteLater()
+    
+        # Create and add the home body widget
+        from gui.home_body_widget import HomeBodyWidget
+        main_window.body = HomeBodyWidget(ui_config=self.ui_config)
+        main_window.main_layout.insertWidget(1, main_window.body)

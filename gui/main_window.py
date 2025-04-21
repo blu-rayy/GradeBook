@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout
 from gui.header_widget import HeaderWidget
-from gui.course_body_widget import BodyWidget
+from gui.course_body_widget import CourseBodyWidget
+from gui.home_body_widget import HomeBodyWidget
 from gui.footer_widget import FooterWidget
 
 class MainWindow(QMainWindow):
@@ -22,7 +23,8 @@ class MainWindow(QMainWindow):
         self.header = HeaderWidget(ui_config=self.ui_config)
         self.main_layout.addWidget(self.header)
 
-        self.body = BodyWidget(ui_config=self.ui_config)
+        self.body = CourseBodyWidget(ui_config=self.ui_config)
+        #self.body = HomeBodyWidget(ui_config=self.ui_config)
         self.main_layout.addWidget(self.body)
 
         self.footer = FooterWidget(ui_config=self.ui_config)

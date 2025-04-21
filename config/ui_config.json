@@ -4,7 +4,8 @@
       "DARK_TEAL": "#002832",
       "GREEN_TEAL": "#00674F",
       "SNOW_WHITE": "#E3F9FA",
-      "WHITE": "#FFFFFF"
+      "WHITE": "#FFFFFF",
+      "GRAY": "#949D9D"
     },
     "fonts": {
       "HEADING_FONT": "Narnoor Regular",

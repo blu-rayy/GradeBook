@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QSizePolicy, QLab
 from PyQt5.QtCore import Qt
 from gui.ui_components import create_section
 
-class BodyWidget(QWidget):
+class CourseBodyWidget(QWidget):
     def __init__(self, ui_config=None, parent=None):
         super().__init__(parent)
         self.ui_config = ui_config
