@@ -10,39 +10,29 @@ class HomeBodyWidget(QWidget):
         self.init_ui()
         
     def init_ui(self):
-        # Main layout with no spacing
         layout = QVBoxLayout(self)
         layout.setContentsMargins(70, 0, 70, 0)
         layout.setSpacing(0) 
         self.setStyleSheet("QWidget { margin: 0; padding: 0; }")
 
         # TITLE_SECTION: 1780x77
-        title_section = QWidget()
-        title_section.setObjectName("title_section")
-        title_section.setFixedSize(1780, 77)
-        title_section.setStyleSheet(f"""
-            #title_section {{
-                background-color: {self.ui_config['colors']['GREEN_TEAL']};
-                margin: 0px;
-            }}
-        """)
-        
-        title_layout = QHBoxLayout(title_section)
-        title_layout.setContentsMargins(80, 0, 80, 0)  # Left and right padding of 80px
-        title_layout.setSpacing(0)
-        
-        title_label = QLabel("Course Name")
-        title_label.setStyleSheet(f"""
-            font-family: {self.ui_config['fonts']['HEADING_FONT_BOLD']};
-            font-size: 24px;
-            color: {self.ui_config['colors']['SNOW_WHITE']};
-            margin: 0px;
-            padding: 0px;
-        """)
+            # Title Section
+        title_section, title_layout = create_section(create_section(self.ui_config['colors']['GREEN_TEAL']))
+        title_section.setFixedHeight(self.ui_config['dimensions']['TITLE_SECTION_HEIGHT'])
+        title_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+
+        title_content = QWidget()
+        title_content_layout = QHBoxLayout(title_content)
+        title_content_layout.setContentsMargins(80, 0, 80, 0)
+        title_content_layout.setSpacing(0)
+
+        title_label = QLabel("kristian's GradeBook")
+        title_label.setStyleSheet(f"font-family: {self.ui_config['fonts']['HEADING_FONT_BOLD']}; font-size: 24px; color: {self.ui_config['colors']['GREEN_TEAL']};")
         title_label.setAlignment(Qt.AlignCenter)
-        title_layout.addWidget(title_label)
-        
-        layout.addWidget(title_section, 0, Qt.AlignTop)
+        title_content_layout.addWidget(title_label)
+
+        title_layout.addWidget(title_content)
+        layout.addWidget(title_section)
 
         # BODY_SECTION: 1780x913
         body_section = QWidget()
@@ -92,12 +82,8 @@ class HomeBodyWidget(QWidget):
         
         # Column titles with exact dimensions
         column_titles = [
-            ("COURSE CODE", 208),
-            ("COURSE TITLE", 577),
-            ("SECTION", 201),
-            ("UNITS", 201),
-            ("MIDTERM", 184),
-            ("FINAL", 184)
+            ("COURSE CODE", 208), ("COURSE TITLE", 577), ("SECTION", 201), 
+            ("UNITS", 201), ("MIDTERM", 184), ("FINAL", 184)
         ]
         
         for title, width in column_titles:
@@ -113,7 +99,7 @@ class HomeBodyWidget(QWidget):
         
         content_layout.addWidget(title_subsection)
 
-            # Create a scroll area for the items
+        #SCROLL AREA
         scroll_area = QScrollArea()
         scroll_area.setWidgetResizable(True)
         scroll_area.setFrameShape(QFrame.NoFrame)
@@ -135,7 +121,7 @@ class HomeBodyWidget(QWidget):
                 border-radius: 4px;
                 min-height: 20px;
             }
-                QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
                 height: 0px;
             }
         """)
@@ -147,6 +133,19 @@ class HomeBodyWidget(QWidget):
         items_layout = QVBoxLayout(items_subsection)
         items_layout.setContentsMargins(0, 0, 0, 0)
         items_layout.setSpacing(0)
+        items_layout.setAlignment(Qt.AlignTop)
+
+        items_subsection.setStyleSheet("""
+            #items_subsection {
+            margin: 0px;
+            padding: 0px;
+            }
+        """)
+        scroll_area.setWidget(items_subsection)
+        content_layout.addWidget(scroll_area, 0, Qt.AlignTop)
+        content_layout.setAlignment(Qt.AlignTop)
+        items_subsection.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Minimum)
+
         
         # fetch database courses
         course_data = self.fetch_course_data()
@@ -177,15 +176,25 @@ class HomeBodyWidget(QWidget):
             
             items_layout.addWidget(course_item)
         
-        content_layout.addWidget(items_subsection)
-
         scroll_area.setWidget(items_subsection)
 
-        if len(course_data) <= 10:
+        # calculating dynamic height
+        row_height = 70 # height of each row
+        max_rows = 9 # max rows before displaying a scroll bar
+        actual_rows = len(course_data)  
+        display_rows = min(actual_rows, max_rows) 
+        dynamic_height = display_rows * row_height  # calculating height
+
+        scroll_area.setFixedHeight(dynamic_height)
+        scroll_area.setWidget(items_subsection)
+
+        if actual_rows <= max_rows:
             scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         else:
             scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        
+
+        content_layout.addWidget(scroll_area)
+
         # ADD_COURSE_SECTION
         add_course_section = QWidget()
         add_course_section.setFixedHeight(55)
@@ -202,14 +211,14 @@ class HomeBodyWidget(QWidget):
             color: {self.ui_config['colors']['GRAY']};
         """)
 
-        # course data via SQL
+        # adding the sections
         add_course_layout.addWidget(add_course_label)
         content_layout.addWidget(add_course_section)
         body_layout.addWidget(content_section)
         layout.addWidget(body_section, 0, Qt.AlignTop)
 
+    # filling list with SQL rows
     def fetch_course_data(self):
-        """Fetch course data from database"""
         course_data = []
         try:
             conn = sqlite3.connect('db/gradebook.db')
@@ -226,7 +235,7 @@ class HomeBodyWidget(QWidget):
             course_data = cursor.fetchall()
             conn.close()
             
-            # If course table is empty
+            # If no data in database, use sample data
             if not course_data:
                 course_data = [
                     ("###00", "Far Eastern University Institute of Technology", "T#00", "0", "-", "-"),
@@ -241,9 +250,7 @@ class HomeBodyWidget(QWidget):
                 ("CS23", "Automata Theory and Formal Languages", "TN27", "3", "3.00", "-"),
                 ("CS48", "CS SPEC 1 - Structured Programming Language (LEC)", "TN27", "2", "3.50", "-"),
                 ("CS48L", "CS SPEC 1 - Structured Programming Language (LAB)", "TN27", "1", "3.50", "-"),
-                ("CS51", "CS ELECTIVE - Parallel and Distributive COmputing", "TN27", "3", "3.50", "-"),
-                ("GED31", "Purposive Communication", "TN27", "3", "4.00", "-"),
-                ("CS51", "CS ELECTIVE - Parallel and Distributive COmputing", "TN27", "3", "3.50", "-"),
+                ("CS51", "CS ELECTIVE - Parallel and Distributive Computing", "TN27", "3", "3.50", "-"),
                 ("GED31", "Purposive Communication", "TN27", "3", "4.00", "-")
             ]
         
