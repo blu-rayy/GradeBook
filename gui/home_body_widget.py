@@ -57,9 +57,8 @@ class HomeBodyWidget(QWidget):
         content_section.setObjectName("content_section")
         content_section.setStyleSheet("""
             #content_section {
-                background-color: white;
+                background-color: transparent;
                 border-radius: 5px;
-                box-shadow: inset 0px 4px 10px rgba(0, 0, 0, 0.1);
             }
         """)
         
