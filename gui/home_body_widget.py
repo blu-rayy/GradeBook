@@ -112,6 +112,33 @@ class HomeBodyWidget(QWidget):
             title_subsection_layout.addWidget(header_label)
         
         content_layout.addWidget(title_subsection)
+
+            # Create a scroll area for the items
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setFrameShape(QFrame.NoFrame)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        scroll_area.setStyleSheet("""
+            QScrollArea {
+                border: none;
+                background-color: transparent;
+            }
+            QScrollBar:vertical {
+                border: none;
+                background: #F0F0F0;
+                width: 8px;
+                margin: 0px 0px 0px 0px;
+            }
+            QScrollBar::handle:vertical {
+                background: #CCCCCC;
+                border-radius: 4px;
+                min-height: 20px;
+            }
+                QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                height: 0px;
+            }
+        """)
         
         # ITEMS_SUBSECTION: 1555x533 (dynamic)
         items_subsection = QWidget()
@@ -151,6 +178,13 @@ class HomeBodyWidget(QWidget):
             items_layout.addWidget(course_item)
         
         content_layout.addWidget(items_subsection)
+
+        scroll_area.setWidget(items_subsection)
+
+        if len(course_data) <= 10:
+            scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        else:
+            scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         
         # ADD_COURSE_SECTION
         add_course_section = QWidget()
@@ -192,7 +226,7 @@ class HomeBodyWidget(QWidget):
             course_data = cursor.fetchall()
             conn.close()
             
-            # If no data in database, use sample data
+            # If course table is empty
             if not course_data:
                 course_data = [
                     ("###00", "Far Eastern University Institute of Technology", "T#00", "0", "-", "-"),
