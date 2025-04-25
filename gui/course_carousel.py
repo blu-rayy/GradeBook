@@ -15,7 +15,7 @@ class CourseCarousel(QWidget):
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scroll.setWidgetResizable(True)
-        self.scroll.setAlignment(Qt.AlignCenter)
+        self.scroll.setAlignment(Qt.AlignLeft)
         self.scroll.setFrameShape(QFrame.NoFrame) 
         self.scroll.setStyleSheet("QScrollArea { border: none; background: transparent; }")
 
@@ -26,7 +26,7 @@ class CourseCarousel(QWidget):
         self.courses_layout = QHBoxLayout(container)
         self.courses_layout.setContentsMargins(0, 0, 0, 0)
         self.courses_layout.setSpacing(0)
-        self.courses_layout.setAlignment(Qt.AlignCenter)
+        self.courses_layout.setAlignment(Qt.AlignLeft)
 
         course_names = self.fetch_course_nicknames()
 
@@ -45,7 +45,7 @@ class CourseCarousel(QWidget):
         self.scroll_animation.setDuration(300) 
 
     def fetch_course_nicknames(self):
-        course_nicknames = []
+        course_nicknames = ["TECHNO CCS103"]
         try:
             conn = sqlite3.connect('db/gradebook.db')
             cursor = conn.cursor()
@@ -95,7 +95,7 @@ class CourseCarousel(QWidget):
             }}
         """)
 
-        btn.setProperty("alignment", Qt.AlignCenter)
+        btn.setProperty("alignment", Qt.AlignLeft)
         btn.setProperty("textAlignment", Qt.AlignCenter)
         btn.setContentsMargins(0, 0, 0, 0)
 

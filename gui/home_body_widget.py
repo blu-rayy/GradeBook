@@ -280,12 +280,7 @@ class HomeBodyWidget(QWidget):
                 ("CCS43", "Applications Development and Emerging Technologies (LEC)", "TN27", "2", "3.50", "-"),
                 ("CCS43L", "Applications Development and Emerging Technologies (LAB)", "TN27", "1", "3.50", "-"),
                 ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-"),
-                ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-"),
-                ("CS23", "Automata Theory and Formal Languages", "TN27", "3", "3.00", "-"),
-                ("CS48", "CS SPEC 1 - Structured Programming Language (LEC)", "TN27", "2", "3.50", "-"),
-                ("CS48L", "CS SPEC 1 - Structured Programming Language (LAB)", "TN27", "1", "3.50", "-"),
-                ("CS51", "CS ELECTIVE - Parallel and Distributive Computing", "TN27", "3", "3.50", "-"),
-                ("GED31", "Purposive Communication", "TN27", "3", "4.00", "-")
+                ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-")
             ]
         
         return course_data
