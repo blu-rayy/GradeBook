@@ -12,7 +12,7 @@ QWidget[objectName="home_section"], QWidget[objectName="course_section"], QWidge
 }
 
 QLabel {
-    color: #145A5A; /* Or your preferred icon/text color */
+    color: #145A5A;
     font-size: 16px;
 }
 
