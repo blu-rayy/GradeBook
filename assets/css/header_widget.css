@@ -1,0 +1,25 @@
+HeaderWidget, QWidget#HeaderWidget {
+    background-color: #145A5A;
+}
+
+QLabel {
+    color: #E3F9FA; 
+    font-family: 'Narnoor', Arial, sans-serif;
+}
+QLabel#logoLabel {
+    font-family: 'Narnoor ExtraBold', Arial, sans-serif;
+    font-size: 30px;
+    text-align: center;
+}
+QLabel#nameLabel {
+    font-family: 'Narnoor SemiBold', Arial, sans-serif;
+    font-size: 16px;
+}
+QLabel#termLabel {
+    font-family: 'Narnoor SemiBold', Arial, sans-serif;
+    font-size: 16px;
+}
+
+QLabel#profilePic {
+    border-radius: 16px;
+}
