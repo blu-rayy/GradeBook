@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QScrollArea, QHBoxLayout, QPushButton, QSizePolicy, QFrame
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QAbstractAnimation
 from PyQt5.QtGui import QFont
+from load_utils import *
 import sqlite3
 
 class CourseCarousel(QWidget):
@@ -74,26 +75,7 @@ class CourseCarousel(QWidget):
         font_name = self.ui_config["fonts"]["HEADING_FONT_MEDIUM"]
         btn.setFont(QFont(font_name, 16))
         
-        mid_teal = self.ui_config["colors"]["MID_TEAL"]
-        snow_white = self.ui_config["colors"]["SNOW_WHITE"]
-        
-        btn.setStyleSheet(f"""
-            QPushButton {{
-                background-color: white;
-                color: black;
-                border: none;
-                padding: 0px;
-                text-align: center;
-            }}
-            QPushButton:hover {{
-                background-color: {mid_teal};
-                color: {snow_white};
-            }}
-            QPushButton:focus {{
-                border: none;
-                outline: none;
-            }}
-        """)
+        btn.setStyleSheet(load_stylesheet("assets\css\course_carousel_button.css"))
 
         btn.setProperty("alignment", Qt.AlignLeft)
         btn.setProperty("textAlignment", Qt.AlignCenter)

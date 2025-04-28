@@ -1,0 +1,15 @@
+QPushButton {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 0px;
+    text-align: center;
+}
+QPushButton:hover {
+    background-color: #145A5A;
+    color: #E3F9FA;
+}
+QPushButton:focus {
+    border: none;
+    outline: none;
+}
