@@ -3,7 +3,7 @@ FooterWidget, QWidget#FooterWidget {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     min-height: 70px;
-    font-family: 'Narnoor-Regular', Arial, sans-serif;
+    font-family: 'Narnoor', Arial, sans-serif;
 }
 
 QWidget[objectName="home_section"], QWidget[objectName="course_section"], QWidget[objectName="next_section"] {
