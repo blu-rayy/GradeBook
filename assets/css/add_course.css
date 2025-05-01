@@ -35,28 +35,26 @@ QLineEdit {
     border: 1px solid #145A5A;
     border-radius: 8px;
     padding: 6px 10px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter';
     font-size: 16px;
     color: #002832; /* DARK_TEAL */
 }
 
 QLabel {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter';
     font-size: 16px;
     color: #002832;
 }
 
-QPushButton {
-    min-width: 170px;
-    min-height: 40px;
-    font-size: 16px;
-    font-family: 'Inter', sans-serif;
-    border-radius: 10px;
+QPushButton#bottom_button {
     background-color: #145A5A;
-    color: white;
     border: none;
+    border-radius: 10px;
+    color: #145A5A;
+    font-family: 'Inter';
+    font-size: 16px;
 }
 
-QPushButton:hover {
+QPushButton#bottom_button:hover {
     background-color: #1B6B6B;
 }

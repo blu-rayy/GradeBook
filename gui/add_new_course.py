@@ -51,7 +51,8 @@ class AddCourse(QDialog):
         title_section.setStyleSheet("background-color: #186060;")  # Match the teal background
 
         title_layout = QHBoxLayout(title_section)
-        title_label = QLabel("Add New Course")
+        title_layout.setContentsMargins(15, 0, 15, 0)
+        title_label = QLabel("ADD NEW COURSE")
         title_label.setObjectName("title_label")
         title_label.setAlignment(Qt.AlignCenter)
 
@@ -62,9 +63,8 @@ class AddCourse(QDialog):
         close_button.clicked.connect(self.close)
 
         # Add widgets to layout
-        title_layout.addStretch(1)  # Add stretch on the left
-        title_layout.addWidget(title_label, 4)
-        #title_layout.addWidget(close_button, 0, Qt.AlignRight | Qt.AlignVCenter)
+        title_layout.addWidget(title_label)
+        title_layout.addWidget(close_button, Qt.AlignRight)
 
         container_layout.addWidget(title_section)
                 
