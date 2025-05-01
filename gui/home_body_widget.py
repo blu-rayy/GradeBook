@@ -280,6 +280,7 @@ class HomeBodyWidget(QWidget):
                 ("CCS43", "Applications Development and Emerging Technologies (LEC)", "TN27", "2", "3.50", "-"),
                 ("CCS43L", "Applications Development and Emerging Technologies (LAB)", "TN27", "1", "3.50", "-"),
                 ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-"),
+                ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-"),
                 ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-")
             ]
         
