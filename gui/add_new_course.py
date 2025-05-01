@@ -64,7 +64,7 @@ class AddCourse(QDialog):
         # Add widgets to layout
         title_layout.addStretch(1)  # Add stretch on the left
         title_layout.addWidget(title_label, 4)
-        title_layout.addWidget(close_button, 0, Qt.AlignRight | Qt.AlignVCenter)
+        #title_layout.addWidget(close_button, 0, Qt.AlignRight | Qt.AlignVCenter)
 
         container_layout.addWidget(title_section)
                 
