@@ -1,0 +1,62 @@
+QDialog, QWidget#popup_container {
+    background-color: white;
+    border-radius: 30px;
+}
+
+QWidget#title_section {
+    background-color: #145A5A; /* MID_TEAL */
+    height: 50px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+QLabel#title_label {
+    font-family: 'Narnoor SemiBold';
+    font-size: 30px;
+    color: #E3F9FA;
+    text-align: center;
+}
+
+QPushButton#close_button {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    font-family: 'Narnoor SemiBold';
+    color: white;
+}
+
+QWidget#content_section {
+    background-color: white;
+    padding: 43px;
+}
+
+QLineEdit {
+    height: 40px;
+    border: 1px solid #145A5A;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #002832; /* DARK_TEAL */
+}
+
+QLabel {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #002832;
+}
+
+QPushButton {
+    min-width: 170px;
+    min-height: 40px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    border-radius: 10px;
+    background-color: #145A5A;
+    color: white;
+    border: none;
+}
+
+QPushButton:hover {
+    background-color: #1B6B6B;
+}

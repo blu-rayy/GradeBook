@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy, QFrame, QScrollArea, QGraphicsDropShadowEffect
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy, QFrame, QScrollArea, QGraphicsDropShadowEffect, QPushButton
 from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt
 from gui.ui_components import create_section
@@ -257,8 +257,8 @@ class HomeBodyWidget(QWidget):
 
     # filling list with SQL rows
     def show_add_course_dialog(self):
-        from gui.add_new_course import AddNewCourseDialog
-        dialog = AddNewCourseDialog(self)
+        from gui.add_new_course import AddCourse
+        dialog = AddCourse(ui_config=self.ui_config, parent=self)
         dialog.exec_()
 
     def fetch_course_data(self):
