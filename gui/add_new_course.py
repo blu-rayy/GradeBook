@@ -52,7 +52,7 @@ class AddCourse(QDialog):
 
         title_layout = QHBoxLayout(title_section)
         title_layout.setContentsMargins(15, 0, 15, 0)
-        title_label = QLabel("ADD NEW COURSE")
+        title_label = QLabel("Add New Course")
         title_label.setObjectName("title_label")
         title_label.setAlignment(Qt.AlignCenter)
 
@@ -88,16 +88,8 @@ class AddCourse(QDialog):
         
         self.title_input = QLineEdit()
         self.title_input.setFixedHeight(40)
+        self.title_input.setObjectName("title_input")
         self.title_input.setPlaceholderText("e.g., Introduction to Computing (LEC)")
-        self.title_input.setStyleSheet(f"""
-            QLineEdit {{
-                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
-                border-radius: 5px;
-                padding: 5px 10px;
-                font-family: {self.ui_config['fonts']['BODY_FONT']};
-                font-size: 14px;
-            }}
-        """)
         
         # Add shadow to title input
         title_shadow = QGraphicsDropShadowEffect()
@@ -122,18 +114,19 @@ class AddCourse(QDialog):
         
         import_button = QPushButton("Import Course")
         import_button.setFixedSize(170, 40)
+        #import_button.setObjectName("bottom_button")
         import_button.setStyleSheet(f"""
-            QPushButton {{
-                background-color: white;
-                border: 2px solid {self.ui_config['colors']['MID_TEAL']};
-                border-radius: 5px;
-                color: {self.ui_config['colors']['MID_TEAL']};
+           QPushButton {{
+                background-color: {self.ui_config['colors']['MID_TEAL']};
+                border: none;
+                border-radius: 20px;
+                color: {self.ui_config['colors']['SNOW_WHITE']};
                 font-family: {self.ui_config['fonts']['BODY_FONT']};
-                font-size: 16px;
+                font-size: 15px;
                 font-weight: bold;
             }}
             QPushButton:hover {{
-                background-color: #F0F0F0;
+                background-color: {self.ui_config['colors']['DARK_TEAL']};
             }}
         """)
         import_button.clicked.connect(self.import_course)
@@ -144,16 +137,17 @@ class AddCourse(QDialog):
             QPushButton {{
                 background-color: {self.ui_config['colors']['MID_TEAL']};
                 border: none;
-                border-radius: 5px;
-                color: white;
+                border-radius: 20px;
+                color: {self.ui_config['colors']['SNOW_WHITE']};
                 font-family: {self.ui_config['fonts']['BODY_FONT']};
-                font-size: 16px;
+                font-size: 15px;
                 font-weight: bold;
             }}
             QPushButton:hover {{
                 background-color: {self.ui_config['colors']['DARK_TEAL']};
             }}
         """)
+        create_button.setObjectName("create_button")
         create_button.clicked.connect(self.create_course)
         
         button_layout.addWidget(import_button)
@@ -164,7 +158,7 @@ class AddCourse(QDialog):
         main_layout.addWidget(main_container)
         
         # Semi-transparent background
-        self.setStyleSheet("background-color: rgba(0, 0, 0, 80);")
+        #self.setStyleSheet("background-color: rgba(0, 0, 0, 80);")
         
     def setup_animation(self):
         """Setup the popup animation"""
