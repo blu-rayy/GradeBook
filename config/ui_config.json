@@ -13,7 +13,9 @@
       "HEADING_FONT_EXTRABOLD": "Narnoor ExtraBold",
       "HEADING_FONT_MEDIUM": "Narnoor Medium",
       "HEADING_FONT_SEMIBOLD": "Narnoor SemiBold",
-      "BODY_FONT": "Arial"
+      "BODY_FONT": "Inter 18pt Medium",
+      "BODY_FONT_LIGHT_ITALIC": "Inter 18pt ExtraLight"
+
     },
     "dimensions": {
       "HEADER_HEIGHT": 65,

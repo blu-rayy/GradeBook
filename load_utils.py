@@ -29,6 +29,20 @@ def load_fonts():
     QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Medium.ttf")
     QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Regular.ttf")
     QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-SemiBold.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Light.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Thin.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Black.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Narnoor-Italic.ttf")
+
+    QFontDatabase.addApplicationFont(r"assets\fonts\Inter-ExtraLightItalic.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Inter-Italic.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Inter-Light.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Inter-Medium.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Inter-Regular.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Inter-Thin.ttf")
+    QFontDatabase.addApplicationFont(r"assets\fonts\Inter-ThinItalic.ttf")
+
+    
 
 def load_stylesheet(css_file):
     """

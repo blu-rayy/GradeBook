@@ -238,20 +238,29 @@ class HomeBodyWidget(QWidget):
         add_course_layout.setContentsMargins(20, 0, 0, 0)
         add_course_layout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
         
-        add_course_label = QLabel("+ Add New Course")
-        add_course_label.setStyleSheet(f"""
+        add_course_button = QPushButton("+ Add New Course")
+        add_course_button.setStyleSheet(f"""
             font-family: {self.ui_config['fonts']['HEADING_FONT']};
             font-size: 16px;
             color: {self.ui_config['colors']['GRAY']};
+            : transparent;
+            border: none;
         """)
+        add_course_button.setCursor(Qt.PointingHandCursor)
+        add_course_button.clicked.connect(self.show_add_course_dialog)
 
         # adding the sections
-        add_course_layout.addWidget(add_course_label)
+        add_course_layout.addWidget(add_course_button)
         content_layout.addWidget(add_course_section)
         body_layout.addWidget(content_section)
         layout.addWidget(body_section, 0, Qt.AlignTop)
 
     # filling list with SQL rows
+    def show_add_course_dialog(self):
+        from gui.add_new_course import AddNewCourseDialog
+        dialog = AddNewCourseDialog(self)
+        dialog.exec_()
+
     def fetch_course_data(self):
         course_data = []
         try:
