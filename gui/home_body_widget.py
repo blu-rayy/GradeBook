@@ -240,8 +240,8 @@ class HomeBodyWidget(QWidget):
         
         add_course_button = QPushButton("+ Add New Course")
         add_course_button.setStyleSheet(f"""
-            font-family: {self.ui_config['fonts']['HEADING_FONT']};
-            font-size: 16px;
+            font-family: {self.ui_config['fonts']['BODY_FONT_LIGHT_ITALIC']};
+            font-size: 20px;
             color: {self.ui_config['colors']['GRAY']};
             : transparent;
             border: none;
