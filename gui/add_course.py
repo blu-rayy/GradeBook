@@ -13,10 +13,10 @@ class AddCourse(QDialog):
     def __init__(self, ui_config=None, parent=None):
         super().__init__(parent)
         
-        # Load UI configuration
+        self.dragging = False
+        self.offset = None
         self.ui_config = ui_config
         
-        # Set window properties
         self.setWindowTitle("Add New Course")
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Dialog)
         self.setAttribute(Qt.WA_TranslucentBackground)
@@ -82,24 +82,34 @@ class AddCourse(QDialog):
         title_row_layout = QVBoxLayout(title_row)
         title_row_layout.setContentsMargins(0, 0, 0, 0)
         title_row_layout.setSpacing(5)
+
+        input_group = QWidget()
+        input_group_layout = QHBoxLayout(input_group)
+        input_group_layout.setContentsMargins(0, 0, 0, 0)
+        input_group_layout.setSpacing(0)
         
-        title_label = QLabel("Course Title")
-        title_label.setStyleSheet(f"font-family: {self.ui_config['fonts']['BODY_FONT']}; font-size: 16px; color: {self.ui_config['colors']['DARK_TEAL']};")
+        prefix_label = QLabel("Course Title")
+        prefix_label.setObjectName("title_input_prefix")
+        prefix_label.setFixedHeight(40)
+        prefix_label.setFixedWidth(110)
+        prefix_label.setAlignment(Qt.AlignCenter)
         
         self.title_input = QLineEdit()
         self.title_input.setFixedHeight(40)
         self.title_input.setObjectName("title_input")
         self.title_input.setPlaceholderText("e.g., Introduction to Computing (LEC)")
         
-        # Add shadow to title input
+        # Add shadow to Course Title
         title_shadow = QGraphicsDropShadowEffect()
         title_shadow.setBlurRadius(5)
-        title_shadow.setOffset(0, 2)
-        title_shadow.setColor(QColor(0, 0, 0, 30))
-        self.title_input.setGraphicsEffect(title_shadow)
+        title_shadow.setOffset(0, 5)
+        title_shadow.setColor(QColor(0, 0, 0, 80))
+        input_group.setGraphicsEffect(title_shadow)
+
+        input_group_layout.addWidget(prefix_label)
+        input_group_layout.addWidget(self.title_input)
         
-        title_row_layout.addWidget(title_label)
-        title_row_layout.addWidget(self.title_input)
+        title_row_layout.addWidget(input_group)
         content_layout.addWidget(title_row)
         
         # Placeholder for future rows
@@ -157,9 +167,6 @@ class AddCourse(QDialog):
         container_layout.addWidget(content_section)
         main_layout.addWidget(main_container)
         
-        # Semi-transparent background
-        #self.setStyleSheet("background-color: rgba(0, 0, 0, 80);")
-        
     def setup_animation(self):
         """Setup the popup animation"""
         # Set initial position below the screen
@@ -184,10 +191,31 @@ class AddCourse(QDialog):
         
     def mousePressEvent(self, event):
         """Handle mouse press events"""
-        # Close the dialog if clicking outside the main content area
-        if not self.childAt(event.pos()):
+        # Check if we're clicking on the title section
+        pos = event.pos()
+        widget_under_cursor = self.childAt(pos)
+    
+        # If we clicked on the title section or its children
+        title_section_rect = self.findChild(QWidget, "title_section").geometry()
+        if title_section_rect.contains(pos) and not isinstance(widget_under_cursor, QPushButton):
+            self.dragging = True
+            self.offset = event.pos()
+        # Close if clicking outside the dialog content
+        elif not self.childAt(pos):
             self.close()
         super().mousePressEvent(event)
+
+    def mouseMoveEvent(self, event):
+        """Handle mouse movement"""
+        if self.dragging and self.offset:
+            new_pos = self.mapToGlobal(event.pos() - self.offset)
+            self.move(new_pos)
+        super().mouseMoveEvent(event)
+    
+    def mouseReleaseEvent(self, event):
+        """Handle mouse release"""
+        self.dragging = False
+        super().mouseReleaseEvent(event)
     
     def import_course(self):
         """Handle import course button click"""
@@ -227,6 +255,12 @@ class AddCourse(QDialog):
             
         except sqlite3.Error as e:
             print(f"Database error: {e}")
+
+    def apply_rounded_mask(self):
+        path = QPainterPath()
+        path.addRoundedRect(self.rect(), 30, 30)
+        region = QRegion(path.toFillPolygon().toPolygon())
+        self.setMask(region)
 
 
 if __name__ == "__main__":

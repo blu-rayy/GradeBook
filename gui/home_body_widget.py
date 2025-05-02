@@ -257,7 +257,7 @@ class HomeBodyWidget(QWidget):
 
     # filling list with SQL rows
     def show_add_course_dialog(self):
-        from gui.add_new_course import AddCourse
+        from gui.add_course import AddCourse
         dialog = AddCourse(ui_config=self.ui_config, parent=self)
         dialog.exec_()
 
