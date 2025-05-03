@@ -9,7 +9,7 @@ QWidget#main_container {
 }
 
 QWidget#title_section {
-    background-color: #145A5A; /* MID_TEAL */
+    background-color: #145A5A; 
     height: 50px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -37,7 +37,7 @@ QWidget#content_section {
     border-bottom-right-radius: 20px;
 }
 
-QLabel#title_input_prefix {
+QLabel#input_prefix {
     background-color: transparent;
     border: 1px solid #145A5A;
     border-right: none;
@@ -53,7 +53,7 @@ QLabel#title_input_prefix {
     color: #002832;
 }
 
-QLineEdit#title_input {
+QLineEdit#input {
     border: 1px solid #145A5A;
     border-left: none;
     border-top-left-radius: none;
