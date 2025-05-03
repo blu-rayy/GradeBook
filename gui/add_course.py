@@ -4,7 +4,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 # remove from to after debugging
 
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QWidget, QGraphicsDropShadowEffect, QSizePolicy
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QPainterPath, QRegion
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QPoint
 import sqlite3
 from load_utils import apply_stylesheet
@@ -21,6 +21,12 @@ class AddCourse(QDialog):
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.Dialog)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setFixedSize(1095, 432)
+
+        if parent:
+            self.overlay = QWidget(parent)
+            self.overlay.setGeometry(parent.rect())
+            self.overlay.setStyleSheet("background-color: rgba(0, 0, 0, 150);")
+            self.overlay.show()
         
         self.init_ui()
         self.setup_animation()
@@ -33,6 +39,7 @@ class AddCourse(QDialog):
         
         # Main container with shadow
         main_container = QWidget()
+        main_container.setObjectName("main_container")
         container_layout = QVBoxLayout(main_container)
         container_layout.setContentsMargins(0, 0, 0, 0)
         container_layout.setSpacing(0)
@@ -48,7 +55,7 @@ class AddCourse(QDialog):
         title_section = QWidget()
         title_section.setObjectName("title_section")
         title_section.setFixedHeight(60)
-        title_section.setStyleSheet("background-color: #186060;")  # Match the teal background
+        title_section.setStyleSheet("background-color: #186060;")
 
         title_layout = QHBoxLayout(title_section)
         title_layout.setContentsMargins(15, 0, 15, 0)
@@ -70,8 +77,8 @@ class AddCourse(QDialog):
                 
         # Content section
         content_section = QWidget()
+        content_section.setObjectName("content_section")
         content_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        content_section.setStyleSheet("background-color: white; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;")
         
         content_layout = QVBoxLayout(content_section)
         content_layout.setContentsMargins(43, 43, 43, 43)
@@ -98,13 +105,6 @@ class AddCourse(QDialog):
         self.title_input.setFixedHeight(40)
         self.title_input.setObjectName("title_input")
         self.title_input.setPlaceholderText("e.g., Introduction to Computing (LEC)")
-        
-        # Add shadow to Course Title
-        title_shadow = QGraphicsDropShadowEffect()
-        title_shadow.setBlurRadius(5)
-        title_shadow.setOffset(0, 5)
-        title_shadow.setColor(QColor(0, 0, 0, 80))
-        input_group.setGraphicsEffect(title_shadow)
 
         input_group_layout.addWidget(prefix_label)
         input_group_layout.addWidget(self.title_input)
@@ -166,28 +166,49 @@ class AddCourse(QDialog):
         
         container_layout.addWidget(content_section)
         main_layout.addWidget(main_container)
+
+    def closeEvent(self, event):
+        if hasattr(self, 'overlay') and self.overlay:
+            self.overlay.hide()
+            self.overlay.deleteLater()
+        super().closeEvent(event)
         
     def setup_animation(self):
         """Setup the popup animation"""
-        # Set initial position below the screen
-        self.move(
-            (self.parent().width() if self.parent() else self.screen().size().width()) // 2 - self.width() // 2,
-            (self.parent().height() if self.parent() else self.screen().size().height())
-        )
-        
-        # Create animation
+        # Get screen or parent dimensions for positioning
+        screen_width = self.parent().width() if self.parent() else self.screen().size().width()
+        screen_height = self.parent().height() if self.parent() else self.screen().size().height()
+    
+    # Calculate center position
+        center_x = screen_width // 2 - self.width() // 2
+    
+    # Set initial position below the screen (for slide up animation)
+        self.move(center_x, screen_height)
+    
+    # Create animation to slide up from bottom to center
         self.animation = QPropertyAnimation(self, b"pos")
         self.animation.setDuration(300)
-        self.animation.setEndValue(QPoint(
-            (self.parent().width() if self.parent() else self.screen().size().width()) // 2 - self.width() // 2,
-            (self.parent().height() if self.parent() else self.screen().size().height()) // 2 - self.height() // 2
-        ))
+        self.animation.setEndValue(QPoint(center_x, screen_height // 2 - self.height() // 2))
         self.animation.setEasingCurve(QEasingCurve.OutCubic)
+    
+        if hasattr(self, 'overlay') and self.overlay and self.parent():
+            self.overlay.setGeometry(self.parent().rect())
+        # fade in animation
+            self.overlay_animation = QPropertyAnimation(self.overlay, b"windowOpacity")
+            self.overlay_animation.setDuration(300)
+            self.overlay_animation.setStartValue(0.0)
+            self.overlay_animation.setEndValue(1.0)
+            self.overlay_animation.setEasingCurve(QEasingCurve.OutCubic)
+            self.overlay.setWindowOpacity(0.0)
         
     def showEvent(self, event):
         """Override show event to start animation"""
         super().showEvent(event)
         self.animation.start()
+
+        # Start overlay animation if it exists
+        if hasattr(self, 'overlay_animation'):
+            self.overlay_animation.start()
         
     def mousePressEvent(self, event):
         """Handle mouse press events"""

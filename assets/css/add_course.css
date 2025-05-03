@@ -1,4 +1,9 @@
 QDialog, QWidget#popup_container {
+    background-color: transparent;
+    border-radius: 20px;
+}
+
+QWidget#main_container {
     background-color: white;
     border-radius: 20px;
 }
@@ -28,6 +33,8 @@ QPushButton#close_button {
 QWidget#content_section {
     background-color: white;
     padding: 43px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 QLabel#title_input_prefix {

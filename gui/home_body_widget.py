@@ -258,8 +258,17 @@ class HomeBodyWidget(QWidget):
     # filling list with SQL rows
     def show_add_course_dialog(self):
         from gui.add_course import AddCourse
-        dialog = AddCourse(ui_config=self.ui_config, parent=self)
+    
+        main_window = self.window()
+    
+        dialog = AddCourse(ui_config=self.ui_config, parent=main_window)
+        dialog.finished.connect(self.refresh_course_list)
         dialog.exec_()
+
+    def refresh_course_list(self):
+        # placeholder function
+        course_data = self.fetch_course_data()
+        print("Course list refreshed")
 
     def fetch_course_data(self):
         course_data = []
