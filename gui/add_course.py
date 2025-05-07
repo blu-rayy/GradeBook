@@ -82,7 +82,7 @@ class AddCourse(QDialog):
         
         content_layout = QVBoxLayout(content_section)
         content_layout.setContentsMargins(43, 43, 43, 43)
-        content_layout.setSpacing(0)
+        content_layout.setSpacing(10)
         
         # First row - Course Title
         title_row = QWidget()
@@ -91,7 +91,7 @@ class AddCourse(QDialog):
         title_row_layout.setSpacing(0)
 
         input_group = QWidget()
-        input_group.setFixedWidth(1000)
+        input_group.setFixedWidth(1009)
         input_group_layout = QHBoxLayout(input_group)
         input_group_layout.setContentsMargins(0, 0, 0, 0)
         input_group_layout.setSpacing(0)
@@ -114,13 +114,12 @@ class AddCourse(QDialog):
 
         # Second row - Course Nickname
         nickname_row = QWidget()
-        nickname_row_layout = QHBoxLayout(nickname_row)  # Change to HBoxLayout for side-by-side display
+        nickname_row_layout = QHBoxLayout(nickname_row)
         nickname_row_layout.setContentsMargins(0, 0, 0, 0)
-        nickname_row_layout.setSpacing(20)  # Space between nickname and code inputs
+        nickname_row_layout.setSpacing(14)  # or 20 for more gap
 
         # Course Nickname
         nickname_input_group = QWidget()
-        nickname_input_group.setFixedWidth(481)
         nickname_input_layout = QHBoxLayout(nickname_input_group)
         nickname_input_layout.setContentsMargins(0, 0, 0, 0)
         nickname_input_layout.setSpacing(0)
@@ -135,14 +134,13 @@ class AddCourse(QDialog):
         self.nickname_input.setFixedHeight(40)
         self.nickname_input.setObjectName("input")
         self.nickname_input.setPlaceholderText("fifteen characters only (e.g., ITC CCS1)")
-        self.nickname_input.setFixedWidth(481 - 150)
 
         nickname_input_layout.addWidget(nickname_prefix_label)
         nickname_input_layout.addWidget(self.nickname_input)
 
         # Course Code
         code_input_group = QWidget()
-        code_input_group.setFixedWidth(337)
+        code_input_group.setFixedWidth(330)
         code_input_layout = QHBoxLayout(code_input_group)
         code_input_layout.setContentsMargins(0, 0, 0, 0)
         code_input_layout.setSpacing(0)
@@ -157,14 +155,14 @@ class AddCourse(QDialog):
         self.code_input.setFixedHeight(40)
         self.code_input.setObjectName("input")
         self.code_input.setPlaceholderText("e.g., CCS1")
-        self.code_input.setFixedWidth(337 - 120)
+        self.code_input.setFixedWidth(330 - 120)
 
         code_input_layout.addWidget(code_prefix_label)
         code_input_layout.addWidget(self.code_input)
 
         # Second row - Section
         section_input_group = QWidget()
-        section_input_group.setFixedWidth(166)
+        section_input_group.setFixedWidth(190)
         section_input_layout = QHBoxLayout(section_input_group)
         section_input_layout.setContentsMargins(0, 0, 0, 0)
         section_input_layout.setSpacing(0)
@@ -179,15 +177,15 @@ class AddCourse(QDialog):
         self.section_input.setFixedHeight(40)
         self.section_input.setObjectName("input")
         self.section_input.setPlaceholderText("e.g., TN01")
-        self.section_input.setFixedWidth(166 - 70)
+        self.section_input.setFixedWidth(190 - 70)
+        self.section_input.setMaximumWidth(120)
 
         section_input_layout.addWidget(section_prefix_label)
         section_input_layout.addWidget(self.section_input)
 
-        # Add inputs directly to the row layout
-        nickname_row_layout.addWidget(nickname_input_group)
-        nickname_row_layout.addWidget(code_input_group)
-        nickname_row_layout.addWidget(section_input_group)
+        nickname_row_layout.addWidget(nickname_input_group, 3)
+        nickname_row_layout.addWidget(code_input_group, 2)     
+        nickname_row_layout.addWidget(section_input_group, 2)  
         content_layout.addWidget(nickname_row)
 
         # Placeholder for future rows
