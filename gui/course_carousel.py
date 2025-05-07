@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QScrollArea, QHBoxLayout, QPushButton, QSizePolicy, QFrame
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QAbstractAnimation
 from PyQt5.QtGui import QFont
+from load_utils import *
 import sqlite3
 
 class CourseCarousel(QWidget):
@@ -15,7 +16,7 @@ class CourseCarousel(QWidget):
         self.scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scroll.setWidgetResizable(True)
-        self.scroll.setAlignment(Qt.AlignCenter)
+        self.scroll.setAlignment(Qt.AlignLeft)
         self.scroll.setFrameShape(QFrame.NoFrame) 
         self.scroll.setStyleSheet("QScrollArea { border: none; background: transparent; }")
 
@@ -26,7 +27,7 @@ class CourseCarousel(QWidget):
         self.courses_layout = QHBoxLayout(container)
         self.courses_layout.setContentsMargins(0, 0, 0, 0)
         self.courses_layout.setSpacing(0)
-        self.courses_layout.setAlignment(Qt.AlignCenter)
+        self.courses_layout.setAlignment(Qt.AlignLeft)
 
         #course_names = self.fetch_course_nicknames()
         course_names = [
@@ -49,7 +50,7 @@ class CourseCarousel(QWidget):
         self.scroll_animation.setDuration(300) 
 
     def fetch_course_nicknames(self):
-        course_nicknames = ["TECHNO CCS0103", "PYTHON CS48", "AUTOMATA  CS23"] # placeholder values
+        course_nicknames = ["TECHNO CCS103"]
         try:
             conn = sqlite3.connect('db/gradebook.db')
             cursor = conn.cursor()
@@ -77,28 +78,9 @@ class CourseCarousel(QWidget):
         font_name = self.ui_config["fonts"]["HEADING_FONT_MEDIUM"]
         btn.setFont(QFont(font_name, 16))
         
-        mid_teal = self.ui_config["colors"]["MID_TEAL"]
-        snow_white = self.ui_config["colors"]["SNOW_WHITE"]
-        
-        btn.setStyleSheet(f"""
-            QPushButton {{
-                background-color: white;
-                color: black;
-                border: none;
-                padding: 0px;
-                text-align: center;
-            }}
-            QPushButton:hover {{
-                background-color: {mid_teal};
-                color: {snow_white};
-            }}
-            QPushButton:focus {{
-                border: none;
-                outline: none;
-            }}
-        """)
+        btn.setStyleSheet(load_stylesheet("assets\css\course_carousel_button.css"))
 
-        btn.setProperty("alignment", Qt.AlignCenter)
+        btn.setProperty("alignment", Qt.AlignLeft)
         btn.setProperty("textAlignment", Qt.AlignCenter)
         btn.setContentsMargins(0, 0, 0, 0)
 

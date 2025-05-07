@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy, QFrame, QScrollArea, QGraphicsDropShadowEffect
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QLabel, QSizePolicy, QFrame, QScrollArea, QGraphicsDropShadowEffect, QPushButton
 from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt
 from gui.ui_components import create_section
@@ -238,20 +238,38 @@ class HomeBodyWidget(QWidget):
         add_course_layout.setContentsMargins(20, 0, 0, 0)
         add_course_layout.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
         
-        add_course_label = QLabel("+ Add New Course")
-        add_course_label.setStyleSheet(f"""
-            font-family: {self.ui_config['fonts']['HEADING_FONT']};
-            font-size: 16px;
+        add_course_button = QPushButton("+ Add New Course")
+        add_course_button.setStyleSheet(f"""
+            font-family: {self.ui_config['fonts']['BODY_FONT_LIGHT_ITALIC']};
+            font-size: 20px;
             color: {self.ui_config['colors']['GRAY']};
+            : transparent;
+            border: none;
         """)
+        add_course_button.setCursor(Qt.PointingHandCursor)
+        add_course_button.clicked.connect(self.show_add_course_dialog)
 
         # adding the sections
-        add_course_layout.addWidget(add_course_label)
+        add_course_layout.addWidget(add_course_button)
         content_layout.addWidget(add_course_section)
         body_layout.addWidget(content_section)
         layout.addWidget(body_section, 0, Qt.AlignTop)
 
     # filling list with SQL rows
+    def show_add_course_dialog(self):
+        from gui.add_course import AddCourse
+    
+        main_window = self.window()
+    
+        dialog = AddCourse(ui_config=self.ui_config, parent=main_window)
+        dialog.finished.connect(self.refresh_course_list)
+        dialog.exec_()
+
+    def refresh_course_list(self):
+        # placeholder function
+        course_data = self.fetch_course_data()
+        print("Course list refreshed")
+
     def fetch_course_data(self):
         course_data = []
         try:
@@ -279,7 +297,9 @@ class HomeBodyWidget(QWidget):
             course_data = [
                 ("CCS43", "Applications Development and Emerging Technologies (LEC)", "TN27", "2", "3.50", "-"),
                 ("CCS43L", "Applications Development and Emerging Technologies (LAB)", "TN27", "1", "3.50", "-"),
-                ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-")
+                ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-"),
+                ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-"),
+                ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-")
             ]
         
         return course_data

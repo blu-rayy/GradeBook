@@ -24,7 +24,7 @@ class MainWindow(QMainWindow):
         self.main_layout.addWidget(self.header)
 
         self.body = CourseBodyWidget(ui_config=self.ui_config)
-        #self.body = HomeBodyWidget(ui_config=self.ui_config)
+        
         self.main_layout.addWidget(self.body)
 
         self.footer = FooterWidget(ui_config=self.ui_config)

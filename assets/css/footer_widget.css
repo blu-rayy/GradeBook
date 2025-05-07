@@ -1,0 +1,35 @@
+FooterWidget, QWidget#FooterWidget {
+    background-color: #145A5A; 
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    min-height: 70px;
+    font-family: 'Narnoor', Arial, sans-serif;
+}
+
+QWidget[objectName="home_section"], QWidget[objectName="course_section"], QWidget[objectName="next_section"] {
+    background: #FFFFFF;
+    border: none;
+}
+
+QLabel {
+    color: #145A5A;
+    font-size: 16px;
+}
+
+QLabel:hover {
+    background: #E3F9FA; 
+    border-radius: 8px;
+}
+
+QLabel:active {
+    background: #B2DFDB;
+}
+
+QPushButton {
+    background: transparent;
+    border: none;
+}
+
+QPushButton:focus {
+    outline: none;
+}

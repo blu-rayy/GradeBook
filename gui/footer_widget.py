@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy, QLabel
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap, QCursor
+
+from load_utils import *
 from gui.ui_components import create_section
 from gui.course_carousel import CourseCarousel
 
@@ -11,9 +13,9 @@ class FooterWidget(QWidget):
         self.init_ui()
         
     def init_ui(self):
+        apply_stylesheet(self, r"assets\css\footer_widget.css")
         self.setFixedHeight(self.ui_config["dimensions"]["FOOTER_HEIGHT"])
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.setStyleSheet(f"background-color: {self.ui_config['colors']['DARK_TEAL']};")
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         
         # Main layout for footer
         layout = QHBoxLayout(self)
