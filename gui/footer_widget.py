@@ -12,7 +12,7 @@ class FooterWidget(QWidget):
         
     def init_ui(self):
         self.setFixedHeight(self.ui_config["dimensions"]["FOOTER_HEIGHT"])
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.setStyleSheet(f"background-color: {self.ui_config['colors']['DARK_TEAL']};")
         
         # Main layout for footer
@@ -25,6 +25,7 @@ class FooterWidget(QWidget):
         home_section.setFixedWidth(self.ui_config["dimensions"]["HOME_SECTION_WIDTH"])
         home_section.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
         layout.addWidget(home_section)
+
         # Icon
         home_icon = QLabel()
         home_icon.setPixmap(QPixmap(r"assets\icons\home.svg").scaled(24, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation))
@@ -37,16 +38,21 @@ class FooterWidget(QWidget):
         # Course Section
         course_section, course_layout = create_section(self.ui_config["colors"]["WHITE"])
         course_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        
         # Coure Carousel
         course_layout.setContentsMargins(0, 0, 0, 0)
         course_layout.setSpacing(0)
         course_layout.setAlignment(Qt.AlignCenter) 
-        self.carousel = CourseCarousel(ui_config=self.ui_config)  # Pass ui_config here
+        self.carousel = CourseCarousel(ui_config=self.ui_config)
         self.carousel.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.carousel.setMinimumSize(1760, 63)  # Set the desired size
+        self.carousel.setMinimumSize(1760, 63)  #course carousel size 
+        self.carousel.setStyleSheet("border: 2px solid red;")  # Apply border to carousel instead
+        course_section.setStyleSheet("background-color: white; border: 2px solid blue;")  # Debug course section
+        
         course_layout.addWidget(self.carousel)
 
         layout.addWidget(course_section)
+        
         # Next Section
         next_section, next_layout = create_section(self.ui_config["colors"]["WHITE"])
         next_section.setFixedWidth(self.ui_config["dimensions"]["NEXT_SECTION_WIDTH"])
@@ -54,6 +60,7 @@ class FooterWidget(QWidget):
         nav_layout = QHBoxLayout()
         nav_layout.setAlignment(Qt.AlignCenter)
         nav_layout.setSpacing(10)  
+        
         # Scroll Left Icon
         left_icon = QLabel()
         left_icon.setPixmap(QPixmap(r"assets\icons\navigate_before.svg").scaled(24, 24, Qt.KeepAspectRatio, Qt.SmoothTransformation))
@@ -80,15 +87,15 @@ class FooterWidget(QWidget):
             self.carousel.scroll_left()
 
     def go_to_home_page(self, event):
-        # Find the main window (parent of parent)
+        # find the main window (parent of parent)
         main_window = self.window()
     
-        # Remove the current body widget
+        # remove current widget (body)
         if hasattr(main_window, 'body'):
             main_window.main_layout.removeWidget(main_window.body)
             main_window.body.deleteLater()
     
-        # Create and add the home body widget
+        # create new body widget (home)
         from gui.home_body_widget import HomeBodyWidget
         main_window.body = HomeBodyWidget(ui_config=self.ui_config)
         main_window.main_layout.insertWidget(1, main_window.body)

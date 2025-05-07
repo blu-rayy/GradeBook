@@ -194,15 +194,15 @@ class HomeBodyWidget(QWidget):
         header_height = 57
         add_course_height = 55
         row_height = 70 # height of each row
-        max_rows = 9 # max rows before displaying a scroll bar
+        max_rows = 9 
         actual_rows = len(course_data)  
         display_rows = min(actual_rows, max_rows) 
         dynamic_height = display_rows * row_height  # calculating height
 
-        max_display_height = max_rows * row_height
-        actual_display_height = actual_rows * row_height
-        total_content_height = header_height + dynamic_height + add_course_height
-        final_content_height = min(total_content_height, 720)
+        max_display_height = max_rows * row_height # maximum height of the scroll area
+        actual_display_height = actual_rows * row_height # actual height of the scroll area
+        total_content_height = header_height + dynamic_height + add_course_height ## total height of the content section
+        final_content_height = min(total_content_height, 720) # maximum height of the content section
 
         content_section.setFixedHeight(final_content_height)
 
@@ -279,13 +279,7 @@ class HomeBodyWidget(QWidget):
             course_data = [
                 ("CCS43", "Applications Development and Emerging Technologies (LEC)", "TN27", "2", "3.50", "-"),
                 ("CCS43L", "Applications Development and Emerging Technologies (LAB)", "TN27", "1", "3.50", "-"),
-                ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-"),
-                ("CS13", "Networks and Communications 1", "TN27", "3", "3.00", "-"),
-                ("CS23", "Automata Theory and Formal Languages", "TN27", "3", "3.00", "-"),
-                ("CS48", "CS SPEC 1 - Structured Programming Language (LEC)", "TN27", "2", "3.50", "-"),
-                ("CS48L", "CS SPEC 1 - Structured Programming Language (LAB)", "TN27", "1", "3.50", "-"),
-                ("CS51", "CS ELECTIVE - Parallel and Distributive Computing", "TN27", "3", "3.50", "-"),
-                ("GED31", "Purposive Communication", "TN27", "3", "4.00", "-")
+                ("CCS103", "Technopreneurship (CCS)", "TN27", "3", "4.00", "-")
             ]
         
         return course_data

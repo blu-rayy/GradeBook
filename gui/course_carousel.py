@@ -28,13 +28,17 @@ class CourseCarousel(QWidget):
         self.courses_layout.setSpacing(0)
         self.courses_layout.setAlignment(Qt.AlignCenter)
 
-        course_names = self.fetch_course_nicknames()
-
-
+        #course_names = self.fetch_course_nicknames()
+        course_names = [
+             "TECHNO CCS103", "APPDEV CS43", "PYTHON CS48",
+             "PDCOM CS51", "AUTOMATA CS23", "ML CS98", "DBSYS CS33"
+            ]
 
         for course in course_names:
-            btn = self.create_course_box(course)
+            print(f"Creating button for: {course}")
+            btn = self.create_course_box(course) #debugging line
             self.courses_layout.addWidget(btn)
+            print(f"Button created: {btn}") #debugging line
 
         self.scroll.setWidget(container)
         self.layout.addWidget(self.scroll)
@@ -45,7 +49,7 @@ class CourseCarousel(QWidget):
         self.scroll_animation.setDuration(300) 
 
     def fetch_course_nicknames(self):
-        course_nicknames = []
+        course_nicknames = ["TECHNO CCS0103", "PYTHON CS48", "AUTOMATA  CS23"] # placeholder values
         try:
             conn = sqlite3.connect('db/gradebook.db')
             cursor = conn.cursor()
@@ -60,9 +64,9 @@ class CourseCarousel(QWidget):
                 
             conn.close()
         except sqlite3.Error as e:
-            print(f"Database error: {e}")
+            print(f"Database error: {e}. Using placeholder values...")
         except Exception as e:
-            print(f"Error fetching course nicknames: {e}")
+            print(f"Error fetching course nicknames: {e} Using placeholder values...")
             
         return course_nicknames
     
@@ -70,7 +74,6 @@ class CourseCarousel(QWidget):
         btn = QPushButton(name)
         btn.setFixedSize(320, 63)
         
-        # Use ui_config for font and colors
         font_name = self.ui_config["fonts"]["HEADING_FONT_MEDIUM"]
         btn.setFont(QFont(font_name, 16))
         
