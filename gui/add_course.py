@@ -192,7 +192,7 @@ class AddCourse(QDialog):
         third_row = QWidget()
         third_row_layout = QHBoxLayout(third_row)
         third_row_layout.setContentsMargins(0, 0, 0, 0)
-        third_row_layout.setSpacing(14)  # Match the spacing from previous rows
+        third_row_layout.setSpacing(10)
         
         # Radio button and lecture spinner group
         spinner_group = QWidget()
@@ -368,7 +368,7 @@ class AddCourse(QDialog):
         left_layout.addWidget(radio_group)
         left_layout.addWidget(lec_group)
         left_layout.addWidget(lab_group)
-        left_layout.addStretch()
+
         
         # Template selection
         template_group = QWidget()
@@ -389,7 +389,8 @@ class AddCourse(QDialog):
         self.template_input.setPlaceholderText("only supports .json file extensions")
         self.template_input.setStyleSheet(f"""
             QLineEdit {{
-                border-radius: 0px;
+                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
+                border-right: none;
                 padding: 5px 10px;
                 font-family: {self.ui_config['fonts']['BODY_FONT']};
                 font-size: 14px;
@@ -404,8 +405,8 @@ class AddCourse(QDialog):
         browse_button.setStyleSheet(f"""
             QPushButton#browse_button {{
                 background-color: transparent;
-                border-radius: 0px 4px 4px 0px;
-                border: none;
+                border-radius: 0px 10px 10px 0px;
+                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
             }}
         """)
         browse_button.clicked.connect(self.browse_template)
@@ -419,9 +420,9 @@ class AddCourse(QDialog):
         template_layout.addWidget(template_prefix_label)
         template_layout.addLayout(template_box_layout)
         
-        # Add all to third_row layout
-        third_row_layout.addWidget(left_side, 5)
-        third_row_layout.addWidget(template_group, 5)
+        # add to third row
+        third_row_layout.addWidget(left_side, 1)
+        third_row_layout.addWidget(template_group, 2)
         
         content_layout.addWidget(third_row)
         
@@ -538,6 +539,30 @@ class AddCourse(QDialog):
         # Use the direct reference to lab_group
         if hasattr(self, 'lab_group'):
             self.lab_group.setVisible(checked)
+            
+            # When lab is hidden, expand the template section
+            if not checked:
+                # Find the third_row QWidget
+                third_row = None
+                for i in range(self.findChild(QWidget, "content_section").layout().count()):
+                    item = self.findChild(QWidget, "content_section").layout().itemAt(i).widget()
+                    if item and item.layout() and item.layout().count() == 2:  # Third row has 2 items
+                        left_side = item.layout().itemAt(0).widget()
+                        template_group = item.layout().itemAt(1).widget()
+                        if left_side and template_group:
+                            # Update the stretch factors
+                            item.layout().setStretch(0, 1)  # Compress left side
+                            item.layout().setStretch(1, 3)  # Expand template
+                            break
+            else:
+                # When lab is shown, restore original proportions
+                for i in range(self.findChild(QWidget, "content_section").layout().count()):
+                    item = self.findChild(QWidget, "content_section").layout().itemAt(i).widget()
+                    if item and item.layout() and item.layout().count() == 2:
+                        # Restore original stretch factors
+                        item.layout().setStretch(0, 1)
+                        item.layout().setStretch(1, 2)
+                        break
         
     def select_template(self):
         """Open file dialog to select template file"""
