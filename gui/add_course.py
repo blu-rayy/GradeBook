@@ -238,17 +238,18 @@ class AddCourse(QDialog):
         self.lec_spinner = QSpinBox()
         self.lec_spinner.setObjectName("lec_spinner")
         self.lec_spinner.setRange(0, 5)
-        self.lec_spinner.setValue(2)  # Default value
+        self.lec_spinner.setValue(2)
         self.lec_spinner.setFixedHeight(40)
         self.lec_spinner.setFixedWidth(80)
         self.lec_spinner.setStyleSheet(f"""
        QSpinBox {{
-                border-radius: 0px 4px 4px 0px;
+                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
+                border-left: none;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
                 padding-right: 5px;
                 font-family: {self.ui_config['fonts']['BODY_FONT']};
                 font-size: 16px;
-                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
-                border-left: none;
                 background-color: white;
             }}
             
@@ -258,22 +259,24 @@ class AddCourse(QDialog):
                 border: none;
                 background-color: transparent;
                 border-radius: 2px;
+                margin: 1px 1px;
             }}
             
             QSpinBox::up-button:hover, QSpinBox::down-button:hover {{
-                background-color: {self.ui_config['colors']['GRAY']} ;
+                border-top-right-radius: 2px;
+                background-color: transparent;
             }}
             
             QSpinBox::up-arrow {{
                 image: url(assets/icons/up_arrow.png);
-                width: 10px;
-                height: 10px;
+                width: 14px;
+                height: 14px;
             }}
             
             QSpinBox::down-arrow {{
                 image: url(assets/icons/down_arrow.png);
-                width: 10px;
-                height: 10px;
+                width: 14px;
+                height: 14px;
             }}
         """)
         
@@ -301,12 +304,13 @@ class AddCourse(QDialog):
         self.lab_spinner.setFixedWidth(80)
         self.lab_spinner.setStyleSheet(f"""
             QSpinBox {{
-                border-radius: 0px 4px 4px 0px;
+                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
+                border-left: none;
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
                 padding-right: 5px;
                 font-family: {self.ui_config['fonts']['BODY_FONT']};
                 font-size: 16px;
-                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
-                border-left: none;
                 background-color: white;
             }}
             
@@ -316,22 +320,24 @@ class AddCourse(QDialog):
                 border: none;
                 background-color: transparent;
                 border-radius: 2px;
+                margin: 1px 1px;
             }}
             
             QSpinBox::up-button:hover, QSpinBox::down-button:hover {{
-                background-color: {self.ui_config['colors']['GRAY']} ;
+                border-top-right-radius: 2px;
+                background-color: transparent;
             }}
             
             QSpinBox::up-arrow {{
                 image: url(assets/icons/up_arrow.png);
-                width: 10px;
-                height: 10px;
+                width: 14px;
+                height: 14px;
             }}
             
             QSpinBox::down-arrow {{
                 image: url(assets/icons/down_arrow.png);
-                width: 10px;
-                height: 10px;
+                width: 14px;
+                height: 14px;
             }}
         """)
         
@@ -362,6 +368,7 @@ class AddCourse(QDialog):
         left_layout.addWidget(radio_group)
         left_layout.addWidget(lec_group)
         left_layout.addWidget(lab_group)
+        left_layout.addStretch()
         
         # Template selection
         template_group = QWidget()
@@ -376,10 +383,10 @@ class AddCourse(QDialog):
         template_prefix_label.setAlignment(Qt.AlignCenter)
         
         self.template_input = QLineEdit()
-        self.template_input.setObjectName("TEMPLATE_BOX")
+        self.template_input.setObjectName("input")
         self.template_input.setFixedHeight(40)
         self.template_input.setReadOnly(True)
-        self.template_input.setPlaceholderText("only supports .js file extensions")
+        self.template_input.setPlaceholderText("only supports .json file extensions")
         self.template_input.setStyleSheet(f"""
             QLineEdit {{
                 border-radius: 0px;
@@ -391,17 +398,14 @@ class AddCourse(QDialog):
         
         browse_button = QPushButton()
         browse_button.setFixedSize(40, 40)
-        browse_button.setIcon(QIcon("./assets/folder_icon.png"))
-        browse_button.setIconSize(QSize(20, 20))
+        browse_button.setIcon(QIcon(r"assets\icons\folder.png"))
+        browse_button.setIconSize(QSize(24, 24))
         browse_button.setObjectName("browse_button")
         browse_button.setStyleSheet(f"""
             QPushButton#browse_button {{
-                background-color: {self.ui_config['colors']['MID_TEAL']};
+                background-color: transparent;
                 border-radius: 0px 4px 4px 0px;
                 border: none;
-            }}
-            QPushButton#browse_button:hover {{
-                background-color: {self.ui_config['colors']['DARK_TEAL']};
             }}
         """)
         browse_button.clicked.connect(self.browse_template)
