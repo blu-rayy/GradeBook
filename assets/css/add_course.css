@@ -65,6 +65,72 @@ QLineEdit#input {
     font-size: 14px;
 }
 
+QLineEdit#input_template {
+    border: 1px solid #145A5A;
+    border-left: none;
+    border-right: none;
+    border-top-left-radius: none;
+    border-bottom-left-radius: none;
+    border-top-right-radius: none;
+    border-bottom-right-radius: none;
+    padding-left: 10px;
+    font-family: 'Inter 18pt ExtraLight';
+    font-size: 14px;
+}
+
+QSpinBox#spinners {
+    border: 1px solid #145A5A;
+    border-left: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-right: 5px;
+    font-family: 'Inter 18pt Medium';
+    font-size: 16px;
+    background-color: white;
+}
+
+QSpinBox#spinners::up-button, QSpinBox#spinners::down-button {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: transparent;
+    border-radius: 2px;
+    margin: 1px 1px;
+}
+            
+QSpinBox#spinners::up-button:hover, QSpinBox#spinners::down-button:hover {
+    border-top-right-radius: 2px;
+    background-color: transparent;
+}
+            
+QSpinBox#spinners::up-arrow {
+    image: url(assets/icons/up_arrow.png);
+    width: 14px;
+    height: 14px;
+}
+            
+QSpinBox#spinners::down-arrow {
+    image: url(assets/icons/down_arrow.png);
+    width: 14px;
+    height: 14px;
+}
+
+QRadioButton#radio_button {
+    spacing: 5px;
+}
+
+ QRadioButton#radio_button::indicator {
+    width: 22px;
+    height: 22px;
+    border-radius: 16px;
+    border: 2px solid #145A5A;
+}
+
+QRadioButton#radio_button::indicator:checked {
+    background-color: #145A5A;
+    border: 6px solid #145A5A;
+            }
+
 QLabel {
     font-family: 'Inter 18pt';
     font-size: 16px;
