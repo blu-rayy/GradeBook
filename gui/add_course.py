@@ -3,7 +3,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 # remove from to after debugging
 
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QWidget, QGraphicsDropShadowEffect, QSizePolicy
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QWidget, QGraphicsDropShadowEffect, QSizePolicy, QFileDialog,QRadioButton, QSpinBox, QFileDialog
 from PyQt5.QtGui import QColor, QPainterPath, QRegion
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QPoint
 import sqlite3
