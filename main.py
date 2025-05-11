@@ -18,4 +18,5 @@ if __name__ == "__main__":
 
     window = MainWindow(ui_config=UI_CONFIG)
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec_())        
+    

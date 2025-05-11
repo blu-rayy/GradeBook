@@ -194,15 +194,15 @@ class HomeBodyWidget(QWidget):
         header_height = 57
         add_course_height = 55
         row_height = 70 # height of each row
-        max_rows = 9 # max rows before displaying a scroll bar
+        max_rows = 9 
         actual_rows = len(course_data)  
         display_rows = min(actual_rows, max_rows) 
         dynamic_height = display_rows * row_height  # calculating height
 
-        max_display_height = max_rows * row_height
-        actual_display_height = actual_rows * row_height
-        total_content_height = header_height + dynamic_height + add_course_height
-        final_content_height = min(total_content_height, 720)
+        max_display_height = max_rows * row_height # maximum height of the scroll area
+        actual_display_height = actual_rows * row_height # actual height of the scroll area
+        total_content_height = header_height + dynamic_height + add_course_height ## total height of the content section
+        final_content_height = min(total_content_height, 720) # maximum height of the content section
 
         content_section.setFixedHeight(final_content_height)
 
