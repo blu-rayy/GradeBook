@@ -1,3 +1,9 @@
+QLabel {
+    font-family: 'Inter 18pt';
+    font-size: 16px;
+    color: #002832;
+}
+
 QDialog, QWidget#popup_container {
     background-color: transparent;
     border-radius: 20px;
@@ -129,10 +135,25 @@ QRadioButton#radio_button {
 QRadioButton#radio_button::indicator:checked {
     background-color: #145A5A;
     border: 6px solid #145A5A;
-            }
+}
 
-QLabel {
-    font-family: 'Inter 18pt';
-    font-size: 16px;
-    color: #002832;
+QPushButton#browse_button {
+    background-color: transparent;
+    border: 1px solid #145A5A;
+    border-left: none;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+QPushButton#bottom_button{
+    background-color: #145A5A;
+    border: none;
+    border-radius: 20px;
+    color: #E3F9FA;
+    font-family: 'Inter 18pt Medium';
+    font-size: 15px;
+}
+
+QPushButton#bottom_button:hover {
+    background-color: #002832;
 }

@@ -207,11 +207,6 @@ class AddCourse(QDialog):
         self.has_lab_radio.setCursor(Qt.PointingHandCursor)
         
         lab_label = QLabel("Has Laboratory")
-        lab_label.setStyleSheet(f"""
-            font-family: {self.ui_config['fonts']['BODY_FONT']};
-            font-size: 14px;
-            color: {self.ui_config['colors']['DARK_TEAL']};
-        """)
         
         # Lecture units label and spinner
         lec_label = QLabel("LEC")
@@ -302,17 +297,7 @@ class AddCourse(QDialog):
         browse_button.setIconSize(QSize(24, 24))
         browse_button.setObjectName("browse_button")
         browse_button.setCursor(Qt.PointingHandCursor)
-        browse_button.setStyleSheet(f"""
-            QPushButton#browse_button {{
-                background-color: transparent;
-                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
-                border-left: none;
-                border-top-right-radius: 10px;
-                border-bottom-right-radius: 10px;
-            }}
 
-
-        """)
         browse_button.clicked.connect(self.browse_template)
         
         template_box_layout = QHBoxLayout()
@@ -342,40 +327,14 @@ class AddCourse(QDialog):
         
         import_button = QPushButton("Import Course")
         import_button.setFixedSize(170, 40)
-        #import_button.setObjectName("bottom_button")
-        import_button.setStyleSheet(f"""
-           QPushButton {{
-                background-color: {self.ui_config['colors']['MID_TEAL']};
-                border: none;
-                border-radius: 20px;
-                color: {self.ui_config['colors']['SNOW_WHITE']};
-                font-family: {self.ui_config['fonts']['BODY_FONT']};
-                font-size: 15px;
-                font-weight: bold;
-            }}
-            QPushButton:hover {{
-                background-color: {self.ui_config['colors']['DARK_TEAL']};
-            }}
-        """)
+        import_button.setObjectName("bottom_button")
+
+
         import_button.clicked.connect(self.import_course)
         
         create_button = QPushButton("Create Course")
         create_button.setFixedSize(170, 40)
-        create_button.setStyleSheet(f"""
-            QPushButton {{
-                background-color: {self.ui_config['colors']['MID_TEAL']};
-                border: none;
-                border-radius: 20px;
-                color: {self.ui_config['colors']['SNOW_WHITE']};
-                font-family: {self.ui_config['fonts']['BODY_FONT']};
-                font-size: 15px;
-                font-weight: bold;
-            }}
-            QPushButton:hover {{
-                background-color: {self.ui_config['colors']['DARK_TEAL']};
-            }}
-        """)
-        create_button.setObjectName("create_button")
+        create_button.setObjectName("bottom_button")
         create_button.clicked.connect(self.create_course)
         
         button_layout.addWidget(import_button)
