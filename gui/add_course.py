@@ -4,8 +4,8 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 # remove from to after debugging
 
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QWidget, QGraphicsDropShadowEffect, QSizePolicy, QFileDialog,QRadioButton, QSpinBox, QFileDialog
-from PyQt5.QtGui import QColor, QPainterPath, QRegion
-from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QPoint
+from PyQt5.QtGui import QColor, QPainterPath, QRegion, QIcon
+from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, QPoint, QSize
 import sqlite3
 from load_utils import apply_stylesheet
 
@@ -188,7 +188,241 @@ class AddCourse(QDialog):
         nickname_row_layout.addWidget(section_input_group, 2)  
         content_layout.addWidget(nickname_row)
 
-        # Placeholder for future rows
+        # Third row - Radio button, spinners, template selection
+        third_row = QWidget()
+        third_row_layout = QHBoxLayout(third_row)
+        third_row_layout.setContentsMargins(0, 0, 0, 0)
+        third_row_layout.setSpacing(14)  # Match the spacing from previous rows
+        
+        # Radio button and lecture spinner group
+        spinner_group = QWidget()
+        spinner_group_layout = QHBoxLayout(spinner_group)
+        spinner_group_layout.setContentsMargins(0, 0, 0, 0)
+        spinner_group_layout.setSpacing(0)
+        
+        # Radio button
+        self.has_lab_radio = QRadioButton()
+        self.has_lab_radio.setObjectName("radio_button")
+        self.has_lab_radio.setFixedSize(32, 32)
+        self.has_lab_radio.setCursor(Qt.PointingHandCursor)
+        self.has_lab_radio.setStyleSheet(f"""
+            QRadioButton {{
+                spacing: 5px;
+            }}
+            QRadioButton::indicator {{
+                width: 22px;
+                height: 22px;
+                border-radius: 16px;
+                border: 2px solid {self.ui_config['colors']['MID_TEAL']};
+            }}
+            QRadioButton::indicator:checked {{
+                background-color: {self.ui_config['colors']['MID_TEAL']};
+                border: 6px solid {self.ui_config['colors']['MID_TEAL']};
+            }}
+        """)
+        
+        lab_label = QLabel("Has Laboratory")
+        lab_label.setStyleSheet(f"""
+            font-family: {self.ui_config['fonts']['BODY_FONT']};
+            font-size: 20px;
+            color: {self.ui_config['colors']['DARK_TEAL']};
+        """)
+        
+        # Lecture units label and spinner
+        lec_label = QLabel("LEC")
+        lec_label.setObjectName("input_prefix")
+        lec_label.setFixedHeight(40)
+        lec_label.setFixedWidth(60)
+        lec_label.setAlignment(Qt.AlignCenter)
+        
+        self.lec_spinner = QSpinBox()
+        self.lec_spinner.setObjectName("lec_spinner")
+        self.lec_spinner.setRange(0, 5)
+        self.lec_spinner.setValue(2)  # Default value
+        self.lec_spinner.setFixedHeight(40)
+        self.lec_spinner.setFixedWidth(80)
+        self.lec_spinner.setStyleSheet(f"""
+       QSpinBox {{
+                border-radius: 0px 4px 4px 0px;
+                padding-right: 5px;
+                font-family: {self.ui_config['fonts']['BODY_FONT']};
+                font-size: 16px;
+                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
+                border-left: none;
+                background-color: white;
+            }}
+            
+            QSpinBox::up-button, QSpinBox::down-button {{
+                width: 20px;
+                height: 20px;
+                border: none;
+                background-color: transparent;
+                border-radius: 2px;
+            }}
+            
+            QSpinBox::up-button:hover, QSpinBox::down-button:hover {{
+                background-color: {self.ui_config['colors']['GRAY']} ;
+            }}
+            
+            QSpinBox::up-arrow {{
+                image: url(assets/icons/up_arrow.png);
+                width: 10px;
+                height: 10px;
+            }}
+            
+            QSpinBox::down-arrow {{
+                image: url(assets/icons/down_arrow.png);
+                width: 10px;
+                height: 10px;
+            }}
+        """)
+        
+        # Layout for radio button group
+        radio_group = QWidget()
+        radio_layout = QHBoxLayout(radio_group)
+        radio_layout.setContentsMargins(0, 0, 0, 0)
+        radio_layout.setSpacing(10)
+        radio_layout.addWidget(self.has_lab_radio)
+        radio_layout.addWidget(lab_label)
+        radio_layout.addStretch()
+        
+        # Lab units spinner - will be toggled based on radio button
+        lab_label = QLabel("LAB")
+        lab_label.setObjectName("input_prefix")
+        lab_label.setFixedHeight(40)
+        lab_label.setFixedWidth(60)
+        lab_label.setAlignment(Qt.AlignCenter)
+        
+        self.lab_spinner = QSpinBox()
+        self.lab_spinner.setObjectName("lab_spinner")
+        self.lab_spinner.setRange(0, 5)
+        self.lab_spinner.setValue(1)  # Default value
+        self.lab_spinner.setFixedHeight(40)
+        self.lab_spinner.setFixedWidth(80)
+        self.lab_spinner.setStyleSheet(f"""
+            QSpinBox {{
+                border-radius: 0px 4px 4px 0px;
+                padding-right: 5px;
+                font-family: {self.ui_config['fonts']['BODY_FONT']};
+                font-size: 16px;
+                border: 1px solid {self.ui_config['colors']['MID_TEAL']};
+                border-left: none;
+                background-color: white;
+            }}
+            
+            QSpinBox::up-button, QSpinBox::down-button {{
+                width: 20px;
+                height: 20px;
+                border: none;
+                background-color: transparent;
+                border-radius: 2px;
+            }}
+            
+            QSpinBox::up-button:hover, QSpinBox::down-button:hover {{
+                background-color: {self.ui_config['colors']['GRAY']} ;
+            }}
+            
+            QSpinBox::up-arrow {{
+                image: url(assets/icons/up_arrow.png);
+                width: 10px;
+                height: 10px;
+            }}
+            
+            QSpinBox::down-arrow {{
+                image: url(assets/icons/down_arrow.png);
+                width: 10px;
+                height: 10px;
+            }}
+        """)
+        
+        # Container for lab spinner
+        lab_group = QWidget()
+        lab_layout = QHBoxLayout(lab_group)
+        lab_layout.setContentsMargins(0, 0, 0, 0)
+        lab_layout.setSpacing(0)
+        lab_layout.addWidget(lab_label)
+        lab_layout.addWidget(self.lab_spinner)
+        
+        self.lab_group = lab_group  # Store for visibility toggling
+        lab_group.setVisible(False)  # Initially hidden
+        
+        # Add lecture spinner
+        lec_group = QWidget()
+        lec_layout = QHBoxLayout(lec_group)
+        lec_layout.setContentsMargins(0, 0, 0, 0)
+        lec_layout.setSpacing(0)
+        lec_layout.addWidget(lec_label)
+        lec_layout.addWidget(self.lec_spinner)
+        
+        # Create the left side layout
+        left_side = QWidget()
+        left_layout = QHBoxLayout(left_side)
+        left_layout.setContentsMargins(0, 0, 0, 0)
+        left_layout.setSpacing(10)
+        left_layout.addWidget(radio_group)
+        left_layout.addWidget(lec_group)
+        left_layout.addWidget(lab_group)
+        
+        # Template selection
+        template_group = QWidget()
+        template_layout = QHBoxLayout(template_group)
+        template_layout.setContentsMargins(0, 0, 0, 0)
+        template_layout.setSpacing(0)
+        
+        template_prefix_label = QLabel("Select Template")
+        template_prefix_label.setObjectName("input_prefix")
+        template_prefix_label.setFixedHeight(40)
+        template_prefix_label.setFixedWidth(140)
+        template_prefix_label.setAlignment(Qt.AlignCenter)
+        
+        self.template_input = QLineEdit()
+        self.template_input.setObjectName("TEMPLATE_BOX")
+        self.template_input.setFixedHeight(40)
+        self.template_input.setReadOnly(True)
+        self.template_input.setPlaceholderText("only supports .js file extensions")
+        self.template_input.setStyleSheet(f"""
+            QLineEdit {{
+                border-radius: 0px;
+                padding: 5px 10px;
+                font-family: {self.ui_config['fonts']['BODY_FONT']};
+                font-size: 14px;
+            }}
+        """)
+        
+        browse_button = QPushButton()
+        browse_button.setFixedSize(40, 40)
+        browse_button.setIcon(QIcon("./assets/folder_icon.png"))
+        browse_button.setIconSize(QSize(20, 20))
+        browse_button.setObjectName("browse_button")
+        browse_button.setStyleSheet(f"""
+            QPushButton#browse_button {{
+                background-color: {self.ui_config['colors']['MID_TEAL']};
+                border-radius: 0px 4px 4px 0px;
+                border: none;
+            }}
+            QPushButton#browse_button:hover {{
+                background-color: {self.ui_config['colors']['DARK_TEAL']};
+            }}
+        """)
+        browse_button.clicked.connect(self.browse_template)
+        
+        template_box_layout = QHBoxLayout()
+        template_box_layout.setContentsMargins(0, 0, 0, 0)
+        template_box_layout.setSpacing(0)
+        template_box_layout.addWidget(self.template_input)
+        template_box_layout.addWidget(browse_button)
+        
+        template_layout.addWidget(template_prefix_label)
+        template_layout.addLayout(template_box_layout)
+        
+        # Add all to third_row layout
+        third_row_layout.addWidget(left_side, 5)
+        third_row_layout.addWidget(template_group, 5)
+        
+        content_layout.addWidget(third_row)
+        
+        # Connect the radio button toggle to update lab spinner visibility
+        self.has_lab_radio.toggled.connect(self.toggle_lab_spinner)
         
         # Button row
         button_row = QWidget()
@@ -285,6 +519,41 @@ class AddCourse(QDialog):
         if hasattr(self, 'overlay_animation'):
             self.overlay_animation.start()
         
+    def browse_template(self):
+        """Open file dialog to select a template file"""
+        options = QFileDialog.Options()
+        file_name, _ = QFileDialog.getOpenFileName(
+            self, "Select Template", "", "JavaScript Files (*.json)", options=options
+        )
+        if file_name:
+            # Display only the filename, not the full path
+            self.template_input.setText(os.path.basename(file_name))
+            
+    def toggle_lab_spinner(self, checked):
+        """Show or hide lab spinner based on radio button state"""
+        # Use the direct reference to lab_group
+        if hasattr(self, 'lab_group'):
+            self.lab_group.setVisible(checked)
+        
+    def select_template(self):
+        """Open file dialog to select template file"""
+        options = QFileDialog.Options()
+        file_name, _ = QFileDialog.getOpenFileName(
+            self,
+            "Select Template File",
+            "",
+            "JSON Files (*.json)",
+            options=options
+        )
+        
+        if file_name:
+            # Extract just the filename from the path
+            import os
+            base_filename = os.path.basename(file_name)
+            self.template_box.setText(base_filename)
+            # Store the full path internally
+            self.template_file_path = file_name
+        
     def mousePressEvent(self, event):
         """Handle mouse press events"""
         # Check if we're clicking on the title section
@@ -347,7 +616,7 @@ class AddCourse(QDialog):
             conn.close()
             
             print(f"Course created successfully! ID: {lec_course_id}")
-            self.accept()  # Close dialog on success
+            self.accept()
             
         except sqlite3.Error as e:
             print(f"Database error: {e}")
